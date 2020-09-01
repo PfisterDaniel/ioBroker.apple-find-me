@@ -56,7 +56,7 @@
         "platform": "Javascript/Node.js",
         "main": "main.js",
         "icon": "find-me.png",
-        "enabled": true,
+        "enabled": false,
         "extIcon": "https://raw.githubusercontent.com/PfisterDaniel/ioBroker.find-me/master/admin/find-me.png",
         "readme": "https://github.com/PfisterDaniel/ioBroker.find-me/blob/master/README.md",
         "loglevel": "info",
@@ -71,8 +71,8 @@
         ]
     },
     "native": {
-        "option1": true,
-        "option2": "42"
+        "username": "email@me.com",
+        "password": "password"
     },
     "objects": [],
     "instanceObjects": []
