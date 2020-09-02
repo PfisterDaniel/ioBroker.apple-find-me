@@ -17,7 +17,8 @@
     <link rel="stylesheet" type="text/css" href="style.css" />
     <script type="text/javascript" src="words.js"></script>
 
-    <script type="text/javascript">
+ <!--   <script type="text/javascript">
+    
         // This will be called by the admin adapter when the settings page loads
         function load(settings, onChange) {
             // example: select elements with id=key and class=value and insert value
@@ -59,6 +60,145 @@
         }
     </script>
 
+-->
+<script type="text/javascript">
+
+
+    var locations = [];
+
+    var secret;
+    function encrypt(key, value) {
+        var result = '';
+        for(var i = 0; i < value.length; ++i) {
+            result += String.fromCharCode(key[i % key.length].charCodeAt(0) ^ value.charCodeAt(i));
+        }
+        return result;
+    }
+    function decrypt(key, value) {
+        var result = '';
+        for(var i = 0; i < value.length; ++i) {
+            result += String.fromCharCode(key[i % key.length].charCodeAt(0) ^ value.charCodeAt(i));
+        }
+        return result;
+    }
+
+
+    // the function loadSettings has to exist ...
+    function loadHelper(settings, onChange) {
+        // example: select elements with id=key and class=value and insert value
+        if (!settings) return;
+        // if (settings.electricityPollingInterval === undefined) settings.electricityPollingInterval = 20;
+        $('.value').each(function () {
+               var $key = $(this);
+               var id = $key.attr('id');
+            if (id === 'password') {
+                settings[id] = decrypt(secret, settings[id]);
+            }
+            if ($key.attr('type') === 'checkbox') {
+                // do not call onChange direct, because onChange could expect some arguments
+                $key.prop('checked', settings[id]).change(function() {
+                    onChange();
+                });
+            } else {
+                // do not call onChange direct, because onChange could expect some arguments
+                $key.val(settings[id]).change(function() {
+                    onChange();
+                }).keyup(function() {
+                    onChange();
+                });
+            }
+        });
+        locations = settings.locations || [];
+
+        for (var p = 0;  p< settings.locations.length; p++) {
+            settings.locations[p].name  = settings.locations[p].name || '';
+            settings.locations[p].latitude   = settings.locations[p].latitude || '';
+            settings.locations[p].longitude  = settings.locations[p].longitude || '';
+            settings.locations[p].active  = settings.locations[p].active || '';
+        }
+        onChange(false);
+        
+        values2table('locations', locations, onChange);
+        // function Materialize.updateTextFields(); to reinitialize all the Materialize labels on the page if you are dynamically adding inputs.
+        M.updateTextFields();
+    }
+
+
+
+    // This will be called by the admin adapter when the settings page loads
+    function load(settings, onChange) {
+        socket.emit('getObject', 'system.config', function (err, obj) {
+            secret = (obj.native ? obj.native.secret : '') || 'Zgfr56gFe87jJOM';
+            loadHelper(settings, onChange);
+        });
+        onChange(false);
+    }
+
+/*
+    // This will be called by the admin adapter when the settings page loads
+    function load(settings, onChange) {
+        // example: select elements with id=key and class=value and insert value
+        if (!settings) return;
+        $('.value').each(function () {
+            var $key = $(this);
+            var id = $key.attr('id');
+            if ($key.attr('type') === 'checkbox') {
+                // do not call onChange direct, because onChange could expect some arguments
+                $key.prop('checked', settings[id])
+                    .on('change', () => onChange())
+                    ;
+            } else {
+                // do not call onChange direct, because onChange could expect some arguments
+                $key.val(settings[id])
+                    .on('change', () => onChange())
+                    .on('keyup', () => onChange())
+                    ;
+            }
+        });
+        onChange(false);
+        // reinitialize all the Materialize labels on the page if you are dynamically adding inputs:
+        if (M) M.updateTextFields();
+    }
+*/
+
+
+/*
+    // This will be called by the admin adapter when the user presses the save button
+    function save(callback) {
+        // example: select elements with class=value and build settings object
+        var obj = {};
+        $('.value').each(function () {
+            var $this = $(this);
+            if ($this.attr('type') === 'checkbox') {
+                obj[$this.attr('id')] = $this.prop('checked');
+            } else {
+                obj[$this.attr('id')] = $this.val();
+            }
+        });
+*/
+
+    // This will be called by the admin adapter when the user presses the save button
+    function save(callback) {
+        // example: select elements with class=value and build settings object
+        var obj = {};
+        $('.value').each(function () {
+               var $this = $(this);
+               var id = $this.attr('id');
+               if ($this.attr('type') === 'checkbox') {
+                   obj[id] = $this.prop('checked');
+               } else {
+                   var value = $this.val();
+                   if (id === 'password') {
+                       value = encrypt(secret, value);
+                   }
+                   obj[id] = value;
+               }
+        });
+        obj.locations = table2values('locations');
+        callback(obj);
+    }
+</script>
+
 </head>
 
 <body>
@@ -75,17 +215,67 @@
 
         <!-- For example columns with settings: -->
         <div class="row">
-            <div class="col s6 input-field">
-                <input type="text" class="value" id="username" />
-                <label for="username" class="translate">Username</label>
+            <div class="col s12">
+                <ul class="tabs">
+                    <li class="tab col s2"><a href="#tab-main"      class="translate active">adaptersettings</a></li>
+                    <li class="tab col s2"><a href="#tab-locations" class="translate">Locations</a></li>
+                </ul>
+            </div>
+            <div class="row">
+                &nbsp;
             </div>
 
-            <div class="col s6 input-field">
-                <input type="password" class="value" id="password" />
-                <label for="password" class="translate">Password</label>
+            <div id="tab-main" class="col s12 page">
+                <div class="row">
+                    <div class="col s6 input-field">
+                        <input type="text" class="value" id="username" />
+                        <label for="username" class="translate">Username</label>
+                    </div>
+
+                    <div class="col s6 input-field">
+                        <input type="password" class="value" id="password" />
+                        <label for="password" class="translate">Password</label>
+                    </div>
+                    <div class="col s6 input-field">
+                        <input type="text" class="value" id="bing_maps_api_key" />
+                        <label for="bing_maps_api_key" class="translate">Bing-Maps (API-KEY)</label>
+                    </div>
+                    <div class="input-field col s4">
+                        <select  class="value" id="minutes_to_refresh">
+                            <option value="3" class="translate">Every 3 minutes</option>
+                            <option value="5" class="translate">Every 5 minutes</option>
+                            <option value="10" class="translate">Every 10 minutes</option>
+                        </select>
+                        <label class="translate" for="minutes_to_refresh">Refresh Intervall</label>
+                    </div>
+                    <div class="input-field col s4">
+                        <input type="checkbox" id="showfmly" class="value"/>
+                        <span for="showfmly" class="translate">Show devices from familygroup</span>
+                    </div>
+                </div>
+            </div>
+        
+            <div id="tab-locations" class="col s12 page">
+                <div class="row">
+                    <div class="col s12" id="locations">
+                        <a class="btn-floating waves-effect waves-light blue table-button-add"><i class="material-icons">add</i></a>
+                        <div class="table-values-div">
+                            <table class="table-values">
+                                <thead>
+                                <tr>
+                                    <th data-name="name"        class="translate">name</th>
+                                    <th data-name="latitude"    class="translate">latitude</th>
+                                    <th data-name="longitude"   class="translate">longitude</th>
+                                    <th data-name="active"   data-type="checkbox" class="translate">active</th>
+                                    <th data-buttons="delete up down"></th>
+                                </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-
     </div>
 
 </body>

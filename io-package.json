@@ -19,7 +19,7 @@
         "title": "Apple Find Me",
         "titleLang": {
             "en": "Apple Find Me",
-            "de": "Apple finde mich",
+            "de": "Apple Find Me",
             "ru": "Apple Найди меня",
             "pt": "Apple Find Me",
             "nl": "Apple vind mij",
@@ -72,7 +72,18 @@
     },
     "native": {
         "username": "email@me.com",
-        "password": "password"
+        "password": "password",
+        "bing_maps_api_key": "XXXX-XXXX-XXXX-XXXX",
+        "minutes_to_refresh": "5",
+        "showfmly": true,
+        "locations": [
+            {
+              "name": "Home",
+              "latitude": "0.000000",
+              "longitude": "0.00000",
+              "active": false
+            }
+        ]
     },
     "objects": [],
     "instanceObjects": []
