@@ -127,7 +127,7 @@ function RequestData(){
                 rtn(data);
             }else{
                 adapter.log.error("Fehler beim HTTP-Request. Bitte überprüfen Sie Ihre Benutzerdaten und starten Sie den Adapter neu. StatusCode: " + res.statusCode);
-                adapter.setForeignState("system.adapter." + adapter.namespace + ".alive", false);
+                //adapter.setForeignState("system.adapter." + adapter.namespace + ".alive", false);
             }
         });
     });
