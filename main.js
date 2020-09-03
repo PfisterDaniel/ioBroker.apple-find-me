@@ -190,7 +190,7 @@ function CreateOrUpdateDevices(data)
                 adapter.setObjectNotExists(element.deviceClass + "." + element.deviceDiscoveryId + ".ModelType", {
                     type: "state",
                     common: {
-                        role: "Properties",
+                        role: "info.status",
                         def: "",
                         type: "string",
                         read: true,
@@ -206,7 +206,7 @@ function CreateOrUpdateDevices(data)
                 adapter.setObjectNotExists(element.deviceClass + "." + element.deviceDiscoveryId + ".ModelName", {
                     type: "state",
                     common: {
-                        role: "Properties",
+                        role: "info.status",
                         def: "",
                         type: "string",
                         read: true,
@@ -223,7 +223,7 @@ function CreateOrUpdateDevices(data)
                     type: "state",
                     common: {
                         name: "BatteryLevel",
-                        role: "Status",
+                        role: "info.status",
                         type: "number",
                         min: 0,
                         max: 100,
@@ -241,7 +241,7 @@ function CreateOrUpdateDevices(data)
                     type: "state",
                     common: {
                         name: "BatteryState",
-                        role: "Status",
+                        role: "info.status",
                         type: "string",
                         read: true,
                         write: false,
@@ -256,7 +256,7 @@ function CreateOrUpdateDevices(data)
                     type: "state",
                     common: {
                         name: "ModelImage",
-                        role: "Properties",
+                        role: "url.icon",
                         type: "string",
                         read: true,
                         write: false,
@@ -271,7 +271,7 @@ function CreateOrUpdateDevices(data)
                     type: "state",
                     common: {
                         name: "DeviceID",
-                        role: "Properties",
+                        role: "info.status",
                         type: "string",
                         read: true,
                         write: false,
@@ -290,7 +290,7 @@ function CreateOrUpdateDevices(data)
                         type: "state",
                         common: {
                             name: "Latitude",
-                            role: "Location",
+                            role: "location",
                             type: "number",
                             read: true,
                             write: false,
@@ -320,7 +320,7 @@ function CreateOrUpdateDevices(data)
                         type: "state",
                         common: {
                             name: "Altitude",
-                            role: "Location",
+                            role: "location",
                             type: "number",
                             read: true,
                             write: false,
@@ -335,7 +335,7 @@ function CreateOrUpdateDevices(data)
                         type: "state",
                         common: {
                             name: "PositionType",
-                            role: "Location",
+                            role: "location",
                             type: "string",
                             read: true,
                             write: false,
@@ -350,7 +350,7 @@ function CreateOrUpdateDevices(data)
                         type: "state",
                         common: {
                             name: "Accuracy",
-                            role: "Location",
+                            role: "location",
                             type: "number",
                             read: true,
                             write: false,
@@ -367,7 +367,7 @@ function CreateOrUpdateDevices(data)
                         type: "state",
                         common: {
                             name: "TimeStamp",
-                            role: "Location",
+                            role: "date",
                             type: "string",
                             read: true,
                             write: false,
@@ -378,12 +378,12 @@ function CreateOrUpdateDevices(data)
                     });          
                     var timeStampString = moment(new Date(element.location.timeStamp)).tz('Europe/Berlin').format('YYYY-MM-DD HH:mm');
                     adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.TimeStamp", timeStampString);
-
+                    
                     adapter.setObjectNotExists(element.deviceClass + "." + element.deviceDiscoveryId + ".RefreshTimeStamp", {
                         type: "state",
                         common: {
                             name: "RefreshTimeStamp",
-                            role: "Status",
+                            role: "date",
                             type: "string",
                             read: true,
                             write: false,
@@ -391,7 +391,7 @@ function CreateOrUpdateDevices(data)
                             def: ""
                         },
                         native: {},
-                    });          
+                    });
                     var refreshTimeStampString = moment(new Date()).tz('Europe/Berlin').format('YYYY-MM-DD HH:mm:ss');
                     adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".RefreshTimeStamp", refreshTimeStampString);
 
@@ -399,7 +399,7 @@ function CreateOrUpdateDevices(data)
                         type: "state",
                         common: {
                             name: "CurrentAdress",
-                            role: "Location",
+                            role: "location",
                             type: "string",
                             read: true,
                             write: false,
@@ -434,7 +434,7 @@ function CreateOrUpdateDevices(data)
                         type: "state",
                         common: {
                             name: "CurrentLocation",
-                            role: "Location",
+                            role: "location",
                             type: "string",
                             read: true,
                             write: false,
@@ -465,7 +465,7 @@ function CreateOrUpdateDevices(data)
                            
                         }
                     }
-                    //Retrive Smallest Distance of Locations where Active
+                    //Retrive smallest distance of locations where set as active
                     const smallestDistanceValue = activeLocationsWithDistance.reduce(
                     (acc, loc) =>
                         acc.distance < loc.distance
@@ -477,23 +477,19 @@ function CreateOrUpdateDevices(data)
                     }else{
                         adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.CurrentLocation", "Unknown");
                     }
-                       
-
-
-
                 }
-                
-
-
-                
             }
         });
-        
     });
 }
 
-function onReady() {
 
+
+/**
+ * OnReady Function
+ * it called at Startup the Adapter
+ */
+function onReady() {
     adapter.getForeignObject("system.config", (err, obj) => {
         try {
             if (obj && obj.native && obj.native.secret) {
@@ -511,6 +507,9 @@ function onReady() {
     });
 }
 
+/**
+ * Main Function
+ */
 async function main() {
     //Clear ErrorCounter
     ErrorCounter = 0;
