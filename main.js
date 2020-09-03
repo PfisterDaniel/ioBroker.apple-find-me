@@ -21,6 +21,7 @@ var GeoPoint = require('geopoint');
  */
 let adapter;
 
+var ErrorCounter = 0;
 
 function decrypt(key, value) {
     let result = "";
@@ -124,10 +125,23 @@ function RequestData(){
             content: JSON.stringify(jsonDataObj)
         }, function (err, data, res) {
             if (!err && res.statusCode == 200){
-                rtn(data);
+                ErrorCounter = 0;
+                rtn({"statusCode": res.statusCode, "response": data})
             }else{
-                adapter.log.error("Fehler beim HTTP-Request. Bitte überprüfen Sie Ihre Benutzerdaten und starten Sie den Adapter neu. StatusCode: " + res.statusCode);
-                //adapter.setForeignState("system.adapter." + adapter.namespace + ".alive", false);
+                //Ignore StatusCode -2
+                if(res.statusCode == -2){
+                    rtn({"statusCode": res.statusCode, "response": null})
+                }else{
+                    ErrorCounter = ErrorCounter + 1;
+                    if( ErrorCounter == 3){
+                        adapter.log.error("Error on HTTP-Request. Please check your credentials. StatusCode: " + res.statusCode + " Retry in " + adapter.config.minutes_to_refresh + " minutes. (" + ErrorCounter.toString() + "/3)");
+                        adapter.log.error("HTTP request failed for the third time, adapter is deactivated to prevent deactivation of the iCloud account.");
+                        adapter.setForeignState("system.adapter." + adapter.namespace + ".alive", false);
+                    }else{
+                        adapter.log.error("Error on HTTP-Request. Please check your credentials. StatusCode: " + res.statusCode + " Retry in " + adapter.config.minutes_to_refresh + " minutes. (" + ErrorCounter.toString() + "/3)");
+                        rtn({"statusCode": res.statusCode, "response": null})
+                    }
+                }
             }
         });
     });
@@ -253,6 +267,21 @@ function CreateOrUpdateDevices(data)
                 });       
                 adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".ModelImage", deviceImageUrl);
 
+                adapter.setObjectNotExists(element.deviceClass + "." + element.deviceDiscoveryId + ".DeviceID", {
+                    type: "state",
+                    common: {
+                        name: "DeviceID",
+                        role: "Properties",
+                        type: "string",
+                        read: true,
+                        write: false,
+                        desc: "Geräte Identifikationsnummer",
+                        def: ""
+                    },
+                    native: {},
+                });       
+                adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".DeviceID", element.id);
+
 
                 //Device has Location Parameters
                 if(element.hasOwnProperty('location') && element.location != undefined && element.location != null){
@@ -349,6 +378,22 @@ function CreateOrUpdateDevices(data)
                     });          
                     var timeStampString = moment(new Date(element.location.timeStamp)).tz('Europe/Berlin').format('YYYY-MM-DD HH:mm');
                     adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.TimeStamp", timeStampString);
+
+                    adapter.setObjectNotExists(element.deviceClass + "." + element.deviceDiscoveryId + ".RefreshTimeStamp", {
+                        type: "state",
+                        common: {
+                            name: "RefreshTimeStamp",
+                            role: "Status",
+                            type: "string",
+                            read: true,
+                            write: false,
+                            desc: "TimeStamp der letzten Aktualisierung",
+                            def: ""
+                        },
+                        native: {},
+                    });          
+                    var refreshTimeStampString = moment(new Date()).tz('Europe/Berlin').format('YYYY-MM-DD HH:mm:ss');
+                    adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".RefreshTimeStamp", refreshTimeStampString);
 
                     adapter.setObjectNotExists(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.CurrentAdress", {
                         type: "state",
@@ -467,17 +512,23 @@ function onReady() {
 }
 
 async function main() {
-    
+    //Clear ErrorCounter
+    ErrorCounter = 0;
+
     adapter.log.info("Starting Adapter Find-Me");
     adapter.log.info("Refresh every " + adapter.config.minutes_to_refresh + " minutes");
 
     var Result = await RequestData();
-    CreateOrUpdateDevices(Result);
+    if(Result.statusCode == 200){
+        adapter.log.info(JSON.stringify(Result.response.content.length) + " Devices found");
+        CreateOrUpdateDevices(Result.response);
+    }
 
     var j = schedule.scheduleJob('*/' + adapter.config.minutes_to_refresh + ' * * * *', async function(){
         var Result = await RequestData();
-        adapter.log.info(JSON.stringify(Result.content.length) + " Devices found");
-        CreateOrUpdateDevices(Result);
+        if(Result.statusCode == 200){
+            CreateOrUpdateDevices(Result.response);
+        }
     });
 }
 
