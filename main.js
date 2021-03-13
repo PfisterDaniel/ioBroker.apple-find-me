@@ -504,7 +504,7 @@ function CreateOrUpdateDevices(data)
                         type: "state",
                         common: {
                             name: "CurrentLocation",
-                            role: "location",
+                            role: "text",
                             type: "string",
                             read: true,
                             write: false,
