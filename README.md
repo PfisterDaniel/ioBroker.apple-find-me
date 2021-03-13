@@ -12,13 +12,20 @@
 
 ## apple-find-me adapter for ioBroker
 
-Apple Find Me Connector
+Apple Find Me Connector is a ioBroker-Adapter to get the current locations and other metrics of connected Apple devices.
+
+It work's without 2-Factor-Authentication (2FA) and retrive all connected devices include family devices.
 
 
 ## Changelog
 
 ### 0.0.1
 * Initial release
+
+
+## Bugs and feature requests
+Please create an issue in [GitHub](https://github.com/PfisterDaniel/iobroker.apple-find-me/issues)
+
 
 ## License
 
