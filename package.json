@@ -1,12 +1,12 @@
 {
-  "name": "iobroker.find-me",
+  "name": "iobroker.apple-find-me",
   "version": "0.0.1",
   "description": "Apple Find Me Connector",
   "author": {
     "name": "MasterDan",
     "email": "kontakt@daniel-pfister.de"
   },
-  "homepage": "https://github.com/PfisterDaniel/ioBroker.find-me",
+  "homepage": "https://github.com/PfisterDaniel/ioBroker.apple-find-me",
   "license": "MIT",
   "keywords": [
     "Apple",
@@ -18,7 +18,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/PfisterDaniel/ioBroker.find-me"
+    "url": "https://github.com/PfisterDaniel/ioBroker.apple-find-me"
   },
   "dependencies": {
     "@iobroker/adapter-core": "^2.4.0",
@@ -55,7 +55,7 @@
     "test": "npm run test:js && npm run test:package"
   },
   "bugs": {
-    "url": "https://github.com/PfisterDaniel/ioBroker.find-me/issues"
+    "url": "https://github.com/PfisterDaniel/ioBroker.apple-find-me/issues"
   },
   "readmeFilename": "README.md"
 }

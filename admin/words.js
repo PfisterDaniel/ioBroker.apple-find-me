@@ -62,18 +62,6 @@ systemDictionary = {
           "pl": "Odśwież interwał",
           "zh-cn": "刷新间隔"
         },
-        "Every 3 minutes": {
-            "en": "Every 3 minutes",
-            "de": "Alle 3 Minuten",
-            "ru": "Каждые 3 минуты",
-            "pt": "A cada 3 minutos",
-            "nl": "Elke 3 minuten",
-            "fr": "Toutes les 3 minutes",
-            "it": "Ogni 3 minuti",
-            "es": "Cada 3 minutos",
-            "pl": "Co 3 minuty",
-            "zh-cn": "每3分钟"
-          },
           "Every 5 minutes": {
             "en": "Every 5 minutes",
             "de": "Alle 5 Minuten",
@@ -97,6 +85,150 @@ systemDictionary = {
             "es": "Cada 10 minutos",
             "pl": "Co 10 minut",
             "zh-cn": "每10分钟"
+          },
+          "Every 15 minutes": {
+            "en": "Every 15 minutes",
+            "de": "Alle 15 Minuten",
+            "ru": "Каждые 15 минут",
+            "pt": "A cada 15 minutos",
+            "nl": "Elke 15 minuten",
+            "fr": "Toutes les 15 minutes",
+            "it": "Ogni 15 minuti",
+            "es": "Cada 15 minutos",
+            "pl": "Co 15 minut",
+            "zh-cn": "每15分钟"
+          },
+          "Every 20 minutes": {
+            "en": "Every 20 minutes",
+            "de": "Alle 20 Minuten",
+            "ru": "Каждые 20 минут",
+            "pt": "A cada 20 minutos",
+            "nl": "Elke 20 minuten",
+            "fr": "Toutes les 20 minutes",
+            "it": "Ogni 20 minuti",
+            "es": "Cada 20 minutos",
+            "pl": "Co 20 minut",
+            "zh-cn": "每20分钟"
+          },
+          "Every 25 minutes": {
+            "en": "Every 25 minutes",
+            "de": "Alle 25 Minuten",
+            "ru": "Каждые 25 минут",
+            "pt": "A cada 25 minutos",
+            "nl": "Elke 25 minuten",
+            "fr": "Toutes les 25 minutes",
+            "it": "Ogni 25 minuti",
+            "es": "Cada 25 minutos",
+            "pl": "Co 25 minut",
+            "zh-cn": "每25分钟"
+          },
+          "Every 30 minutes": {
+            "en": "Every 30 minutes",
+            "de": "Alle 30 Minuten",
+            "ru": "Каждые 30 минут",
+            "pt": "A cada 30 minutos",
+            "nl": "Elke 30 minuten",
+            "fr": "Toutes les 30 minutes",
+            "it": "Ogni 30 minuti",
+            "es": "Cada 30 minutos",
+            "pl": "Co 30 minut",
+            "zh-cn": "每30分钟"
+          },
+          "Every 15 minutes": {
+            "en": "Every 15 minutes",
+            "de": "Alle 15 Minuten",
+            "ru": "Каждые 15 минут",
+            "pt": "A cada 15 minutos",
+            "nl": "Elke 15 minuten",
+            "fr": "Toutes les 15 minutes",
+            "it": "Ogni 15 minuti",
+            "es": "Cada 15 minutos",
+            "pl": "Co 15 minut",
+            "zh-cn": "每15分钟"
+          },
+          "Every 35 minutes": {
+            "en": "Every 35 minutes",
+            "de": "Alle 35 Minuten",
+            "ru": "Каждые 35 минут",
+            "pt": "A cada 35 minutos",
+            "nl": "Elke 35 minuten",
+            "fr": "Toutes les 35 minutes",
+            "it": "Ogni 35 minuti",
+            "es": "Cada 35 minutos",
+            "pl": "Co 35 minut",
+            "zh-cn": "每35分钟"
+          },
+          "Every 35 minutes": {
+            "en": "Every 35 minutes",
+            "de": "Alle 35 Minuten",
+            "ru": "Каждые 35 минут",
+            "pt": "A cada 35 minutos",
+            "nl": "Elke 35 minuten",
+            "fr": "Toutes les 35 minutes",
+            "it": "Ogni 35 minuti",
+            "es": "Cada 35 minutos",
+            "pl": "Co 35 minut",
+            "zh-cn": "每35分钟"
+          },
+          "Every 40 minutes": {
+            "en": "Every 40 minutes",
+            "de": "Alle 40 Minuten",
+            "ru": "Каждые 40 минут",
+            "pt": "A cada 40 minutos",
+            "nl": "Elke 40 minuten",
+            "fr": "Toutes les 40 minutes",
+            "it": "Ogni 40 minuti",
+            "es": "Cada 40 minutos",
+            "pl": "Co 40 minut",
+            "zh-cn": "每40分钟"
+          },
+          "Every 45 minutes": {
+            "en": "Every 45 minutes",
+            "de": "Alle 45 Minuten",
+            "ru": "Каждые 45 минут",
+            "pt": "A cada 45 minutos",
+            "nl": "Elke 45 minuten",
+            "fr": "Toutes les 45 minutes",
+            "it": "Ogni 45 minuti",
+            "es": "Cada 45 minutos",
+            "pl": "Co 45 minut",
+            "zh-cn": "每45分钟"
+          },
+          "Every 50 minutes": {
+            "en": "Every 50 minutes",
+            "de": "Alle 50 Minuten",
+            "ru": "Каждые 50 минут",
+            "pt": "A cada 50 minutos",
+            "nl": "Elke 50 minuten",
+            "fr": "Toutes les 50 minutes",
+            "it": "Ogni 50 minuti",
+            "es": "Cada 50 minutos",
+            "pl": "Co 50 minut",
+            "zh-cn": "每50分钟"
+          },
+          "Every 55 minutes": {
+            "en": "Every 55 minutes",
+            "de": "Alle 55 Minuten",
+            "ru": "Каждые 55 минут",
+            "pt": "A cada 55 minutos",
+            "nl": "Elke 55 minuten",
+            "fr": "Toutes les 55 minutes",
+            "it": "Ogni 55 minuti",
+            "es": "Cada 55 minutos",
+            "pl": "Co 55 minut",
+            "zh-cn": "每55分钟"
+          },
+          "Every 60 minutes": {
+            "en": "Every 60 minutes",
+            "de": "Alle 60 Minuten",
+            "ru": "Каждые 60 минут",
+            "pt": "A cada 60 minutos",
+            "nl": "Elke 60 minuten",
+            "fr": "Toutes les 60 minutes",
+            "it": "Ogni 60 minuti",
+            "es": "Cada 60 minutos",
+            "pl": "Co 60 minut",
+            "zh-cn": "每60分钟"
           },
           "name": {
             "en": "name",
@@ -181,6 +313,31 @@ systemDictionary = {
             "es": "Mostrar dispositivos del grupo familiar",
             "pl": "Pokaż urządzenia z grupy rodzinnej",
             "zh-cn": "显示家庭组中的设备"
+          },
+          "Map-Provider": {
+            "en": "Map-Provider",
+            "de": "Kartenanbieter",
+            "ru": "Картографический провайдер",
+            "pt": "Provedor de mapas",
+            "nl": "Kaartaanbieder",
+            "fr": "Fournisseur de carte",
+            "it": "Fornitore di mappe",
+            "es": "Proveedor de mapas",
+            "pl": "Dostawca mapy",
+            "zh-cn": "地图提供者"
+          },
+          "API-Key": {
+            "en": "API-Key",
+            "de": "API-Schlüssel",
+            "ru": "API-ключ",
+            "pt": "Chave API",
+            "nl": "API sleutel",
+            "fr": "Clé API",
+            "it": "Chiave API",
+            "es": "Clave API",
+            "pl": "Klucz API",
+            "zh-cn": "API密钥"
           }
+        
     
 };

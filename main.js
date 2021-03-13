@@ -40,7 +40,7 @@ function decrypt(key, value) {
 function startAdapter(options) {
     // Create the adapter and define its methods
     return adapter = utils.adapter(Object.assign({}, options, {
-        name: "find-me",
+        name: "apple-find-me",
 
         // The ready callback is called when databases are connected and adapter received configuration.
         // start here!
@@ -190,7 +190,7 @@ function CreateOrUpdateDevices(data)
                 adapter.setObjectNotExists(element.deviceClass + "." + element.deviceDiscoveryId + ".ModelType", {
                     type: "state",
                     common: {
-                        role: "info.status",
+                        role: "text",
                         def: "",
                         type: "string",
                         read: true,
@@ -206,7 +206,7 @@ function CreateOrUpdateDevices(data)
                 adapter.setObjectNotExists(element.deviceClass + "." + element.deviceDiscoveryId + ".ModelName", {
                     type: "state",
                     common: {
-                        role: "info.status",
+                        role: "text",
                         def: "",
                         type: "string",
                         read: true,
@@ -223,7 +223,7 @@ function CreateOrUpdateDevices(data)
                     type: "state",
                     common: {
                         name: "BatteryLevel",
-                        role: "info.status",
+                        role: "level",
                         type: "number",
                         min: 0,
                         max: 100,
@@ -241,7 +241,7 @@ function CreateOrUpdateDevices(data)
                     type: "state",
                     common: {
                         name: "BatteryState",
-                        role: "info.status",
+                        role: "text",
                         type: "string",
                         read: true,
                         write: false,
@@ -256,7 +256,7 @@ function CreateOrUpdateDevices(data)
                     type: "state",
                     common: {
                         name: "ModelImage",
-                        role: "url.icon",
+                        role: "url",
                         type: "string",
                         read: true,
                         write: false,
@@ -271,7 +271,7 @@ function CreateOrUpdateDevices(data)
                     type: "state",
                     common: {
                         name: "DeviceID",
-                        role: "info.status",
+                        role: "text",
                         type: "string",
                         read: true,
                         write: false,
@@ -282,7 +282,6 @@ function CreateOrUpdateDevices(data)
                 });       
                 adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".DeviceID", element.id);
 
-
                 //Device has Location Parameters
                 if(element.hasOwnProperty('location') && element.location != undefined && element.location != null){
                     
@@ -290,7 +289,7 @@ function CreateOrUpdateDevices(data)
                         type: "state",
                         common: {
                             name: "Latitude",
-                            role: "location",
+                            role: "sensor",
                             type: "number",
                             read: true,
                             write: false,
@@ -305,7 +304,7 @@ function CreateOrUpdateDevices(data)
                         type: "state",
                         common: {
                             name: "Longitude",
-                            role: "Location",
+                            role: "sensor",
                             type: "number",
                             read: true,
                             write: false,
@@ -320,7 +319,7 @@ function CreateOrUpdateDevices(data)
                         type: "state",
                         common: {
                             name: "Altitude",
-                            role: "location",
+                            role: "sensor",
                             type: "number",
                             read: true,
                             write: false,
@@ -335,7 +334,7 @@ function CreateOrUpdateDevices(data)
                         type: "state",
                         common: {
                             name: "PositionType",
-                            role: "location",
+                            role: "text",
                             type: "string",
                             read: true,
                             write: false,
@@ -350,7 +349,7 @@ function CreateOrUpdateDevices(data)
                         type: "state",
                         common: {
                             name: "Accuracy",
-                            role: "location",
+                            role: "sensor",
                             type: "number",
                             read: true,
                             write: false,
@@ -367,7 +366,7 @@ function CreateOrUpdateDevices(data)
                         type: "state",
                         common: {
                             name: "TimeStamp",
-                            role: "date",
+                            role: "value.time",
                             type: "string",
                             read: true,
                             write: false,
@@ -383,7 +382,7 @@ function CreateOrUpdateDevices(data)
                         type: "state",
                         common: {
                             name: "RefreshTimeStamp",
-                            role: "date",
+                            role: "value.time",
                             type: "string",
                             read: true,
                             write: false,
@@ -395,11 +394,11 @@ function CreateOrUpdateDevices(data)
                     var refreshTimeStampString = moment(new Date()).tz('Europe/Berlin').format('YYYY-MM-DD HH:mm:ss');
                     adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".RefreshTimeStamp", refreshTimeStampString);
 
-                    adapter.setObjectNotExists(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.CurrentAdress", {
+                    adapter.setObjectNotExists(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.CurrentAddress", {
                         type: "state",
                         common: {
-                            name: "CurrentAdress",
-                            role: "location",
+                            name: "CurrentAddress",
+                            role: "text",
                             type: "string",
                             read: true,
                             write: false,
@@ -408,23 +407,94 @@ function CreateOrUpdateDevices(data)
                         },
                         native: {},
                     });          
-                    var HereMapsUrl = 'http://dev.virtualearth.net/REST/v1/Locations/' + element.location.latitude.toFixed(6) + ',' + element.location.longitude.toFixed(6)  + '?incl=ciso2&inclnb=1&key=' + adapter.config.bing_maps_api_key
-                    
-                    urllib.request(HereMapsUrl, {
+
+                    var MapApiUrl = ""
+                    if(adapter.config.mapprovider === 'osm'){
+                        MapApiUrl = 'https://nominatim.openstreetmap.org/reverse?format=json&accept-language=de-DE&lat=' + element.location.latitude + '&lon=' + element.location.longitude + '&zoom=18&addressdetails=1';
+                    }else if (adapter.config.mapprovider === 'bing'){
+                        MapApiUrl = 'https://dev.virtualearth.net/REST/v1/Locations/' + element.location.latitude.toFixed(6) + ',' + element.location.longitude.toFixed(6)  + '?incl=ciso2&inclnb=1&key=' + adapter.config.apikey;
+                    }else if (adapter.config.mapprovider === 'here'){
+                        MapApiUrl = 'https://revgeocode.search.hereapi.com/v1/revgeocode?at=' + element.location.latitude.toFixed(6) + ',' + element.location.longitude.toFixed(6) + '&apiKey=' + adapter.config.apikey;
+                    }else if (adapter.config.mapprovider === 'google'){
+                        MapApiUrl = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' + element.location.latitude + ',' + element.location.longitude  + '&language=de&result_type=street_address&key=' + adapter.config.apikey;
+                    }
+          
+                    adapter.log.debug(MapApiUrl);
+
+                    urllib.request(MapApiUrl, {
                         method: 'GET',
                         rejectUnauthorized: false,
                         dataType : 'json'
                     }, 
                     function (err, data, res) {
-                        if (!err && res.statusCode == 200){
-                            
-                            var CurrentAdress = data.resourceSets[0].resources[0].address.formattedAddress;
+                        //if OpenStreetMap
+                        if(adapter.config.mapprovider === 'osm'){
+                            if (!err && res.statusCode == 200){
+                                var CurrentAddress = "";
+                                if(data.hasOwnProperty('address')){
+                                    var AddressObject = data.address;
+                                    if(AddressObject.hasOwnProperty('road')){
+                                        CurrentAddress += AddressObject.road;
+                                        if(AddressObject.hasOwnProperty('house_number')){
+                                            CurrentAddress += " " +  AddressObject.house_number; 
+                                        }
+                                        CurrentAddress += ", ";
+                                    }
+                                    if(AddressObject.hasOwnProperty('postcode')){
+                                        CurrentAddress += AddressObject.postcode + " ";
+                                    }
+                                    if(AddressObject.hasOwnProperty('village')){
+                                        CurrentAddress += AddressObject.village;
+                                    }else{
+                                        if(AddressObject.hasOwnProperty('town')){
+                                            CurrentAddress += AddressObject.town;
+                                        }
+                                    }
+                                }else{
+                                    CurrentAddress = "Response has no Address Object";
+                                }
+                                adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.CurrentAddress", CurrentAddress);
+                            }
+                            else {
+                                adapter.log.error("Error on getting address from OpenStreetMaps");
+                                adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.CurrentAddress", "< ErrorCode " + res.statusCode + " >");
+                            }
+                        }else if(adapter.config.mapprovider === 'bing'){
+                            if (!err && res.statusCode == 200){
+                                var CurrentAddress = data.resourceSets[0].resources[0].address.formattedAddress;
+                                adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.CurrentAddress", CurrentAddress);
+                            }else{
+                                if(res.statusCode == 401){
+                                    adapter.log.error("API-Key not valid. Please Validate your API-KEY!");
+                                    adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.CurrentAddress", "< No valid API-KEY >");
+                                }
+                            }
+                        }else if(adapter.config.mapprovider === 'here'){
+                            if (!err && res.statusCode == 200){
+                                try{
+                                    var CurrentAddress = data.items[0].address.label;
+                                    adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.CurrentAddress", CurrentAddress);
+                                }catch(e){
+                                    adapter.log.error("Error on getting address from Here-Maps: " + e);
+                                    adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.CurrentAddress", "< Error " + e + " >");
+                                }    
+                            }else {
+                                adapter.log.error("Error on getting address from Here-Maps");
+                                adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.CurrentAddress", "< ErrorCode " + res.statusCode + " >");
+                            }
+                        }else if(adapter.config.mapprovider === 'google'){
+                            if (!err && res.statusCode == 200) {
+                                if (data.status == "OK") {
+                                    var CurrentAddress = data.results[0].formatted_address;
+                                    adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.CurrentAddress", CurrentAddress);
+                                } else {
+                                    adapter.log.error("Error on getting address from Google-Maps");
+                                    adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.CurrentAddress", "< Error: " + data.status+ " >");
+                                }
 
-                            adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.CurrentAdress", CurrentAdress);
-                        }else{
-                            if(res.statusCode == 401){
-                                adapter.log.error("API-Key not valid. Please Validate your API-KEY!");
-                                adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.CurrentAdress", "<No valid API-KEY>");
+                            }else {
+                                adapter.log.error("Error on getting address from Google-Maps");
+                                adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.CurrentAddress", "< ErrorCode " + res.statusCode + " >");
                             }
                         }
                     });
@@ -466,16 +536,20 @@ function CreateOrUpdateDevices(data)
                         }
                     }
                     //Retrive smallest distance of locations where set as active
-                    const smallestDistanceValue = activeLocationsWithDistance.reduce(
-                    (acc, loc) =>
-                        acc.distance < loc.distance
-                        ? acc
-                        : loc
-                    )
-                    if(smallestDistanceValue.distance < 150){
-                        adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.CurrentLocation", smallestDistanceValue.name);
+                    if (activeLocationsWithDistance.length > 0){
+                        const smallestDistanceValue = activeLocationsWithDistance.reduce(
+                        (acc, loc) =>
+                            acc.distance < loc.distance
+                            ? acc
+                            : loc
+                        )
+                        if(smallestDistanceValue.distance < 150){
+                            adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.CurrentLocation", smallestDistanceValue.name);
+                        }else{
+                            adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.CurrentLocation", "Unknown");
+                        }
                     }else{
-                        adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.CurrentLocation", "Unknown");
+                        adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.CurrentLocation", "< No Places Defined >");
                     }
                 }
             }
@@ -514,8 +588,8 @@ async function main() {
     //Clear ErrorCounter
     ErrorCounter = 0;
 
-    adapter.log.info("Starting Adapter Find-Me");
-    adapter.log.info("Refresh every " + adapter.config.minutes_to_refresh + " minutes");
+    adapter.log.info("Starting Adapter Apple-Find-Me");
+    adapter.log.info("Refresh every " + adapter.config.refresh + " minutes");
 
     var Result = await RequestData();
     if(Result.statusCode == 200){
@@ -523,7 +597,7 @@ async function main() {
         CreateOrUpdateDevices(Result.response);
     }
 
-    var j = schedule.scheduleJob('*/' + adapter.config.minutes_to_refresh + ' * * * *', async function(){
+    var j = schedule.scheduleJob('*/' + adapter.config.refresh + ' * * * *', async function(){
         var Result = await RequestData();
         if(Result.statusCode == 200){
             CreateOrUpdateDevices(Result.response);

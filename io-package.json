@@ -1,6 +1,6 @@
 {
     "common": {
-        "name": "find-me",
+        "name": "apple-find-me",
         "version": "0.0.1",
         "news": {
             "0.0.1": {
@@ -57,8 +57,8 @@
         "main": "main.js",
         "icon": "find-me.png",
         "enabled": false,
-        "extIcon": "https://raw.githubusercontent.com/PfisterDaniel/ioBroker.find-me/master/admin/find-me.png",
-        "readme": "https://github.com/PfisterDaniel/ioBroker.find-me/blob/master/README.md",
+        "extIcon": "https://raw.githubusercontent.com/PfisterDaniel/ioBroker.apple-find-me/master/admin/find-me.png",
+        "readme": "https://github.com/PfisterDaniel/ioBroker.apple-find-me/blob/master/README.md",
         "loglevel": "info",
         "mode": "daemon",
         "type": "geoposition",
@@ -73,8 +73,9 @@
     "native": {
         "username": "email@me.com",
         "password": "password",
-        "bing_maps_api_key": "XXXX-XXXX-XXXX-XXXX",
-        "minutes_to_refresh": "5",
+        "mapprovider": "osm",
+        "apikey": "XXXX-XXXX-XXXX-XXXX",
+        "refresh": "5",
         "showfmly": true,
         "locations": [
             {

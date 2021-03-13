@@ -94,6 +94,18 @@
             if (id === 'password') {
                 settings[id] = decrypt(secret, settings[id]);
             }
+            /*if(id === 'map_provider'){
+                showMessage(_($key.val()));
+            }*/
+            if (id === 'mapprovider') {
+                $('#mapprovider').val(settings[id]).select();
+                if(settings[id] === 'osm'){
+                    $('#div_api_key').hide();
+                }
+            }
+            if (id === 'refresh') {
+                $('#refresh').val(settings[id]).select();
+            }
             if ($key.attr('type') === 'checkbox') {
                 // do not call onChange direct, because onChange could expect some arguments
                 $key.prop('checked', settings[id]).change(function() {
@@ -101,6 +113,7 @@
                 });
             } else {
                 // do not call onChange direct, because onChange could expect some arguments
+
                 $key.val(settings[id]).change(function() {
                     onChange();
                 }).keyup(function() {
@@ -116,8 +129,29 @@
             settings.locations[p].longitude  = settings.locations[p].longitude || '';
             settings.locations[p].active  = settings.locations[p].active || '';
         }
+
+
+        $('#mapprovider').change(function () {
+            var $mapprovider = $('#mapprovider');
+            switch ($mapprovider.val()) {
+                case 'osm':
+                    $('#div_api_key').hide();
+                    break;
+                case 'here':
+                    $('#div_api_key').show();
+                    break;
+                case 'bing':
+                    $('#div_api_key').show();
+                    break;
+                case 'google':
+                    $('#div_api_key').show();
+                    break;
+                default:
+            }
+        });
+
         onChange(false);
-        
+
         values2table('locations', locations, onChange);
         // function Materialize.updateTextFields(); to reinitialize all the Materialize labels on the page if you are dynamically adding inputs.
         M.updateTextFields();
@@ -161,38 +195,23 @@
     }
 */
 
-
-/*
     // This will be called by the admin adapter when the user presses the save button
     function save(callback) {
         // example: select elements with class=value and build settings object
         var obj = {};
         $('.value').each(function () {
             var $this = $(this);
+            var id = $this.attr('id');
             if ($this.attr('type') === 'checkbox') {
-                obj[$this.attr('id')] = $this.prop('checked');
+                obj[id] = $this.prop('checked');
             } else {
-                obj[$this.attr('id')] = $this.val();
+                var value = $this.val();
+                if (id === 'password') {
+                    value = encrypt(secret, value);
+                }
+                console.log(id + " -> " + value);
+                obj[id] = value;
             }
-        });
-*/
-
-    // This will be called by the admin adapter when the user presses the save button
-    function save(callback) {
-        // example: select elements with class=value and build settings object
-        var obj = {};
-        $('.value').each(function () {
-               var $this = $(this);
-               var id = $this.attr('id');
-               if ($this.attr('type') === 'checkbox') {
-                   obj[id] = $this.prop('checked');
-               } else {
-                   var value = $this.val();
-                   if (id === 'password') {
-                       value = encrypt(secret, value);
-                   }
-                   obj[id] = value;
-               }
         });
         obj.locations = table2values('locations');
         callback(obj);
@@ -236,17 +255,37 @@
                         <input type="password" class="value" id="password" />
                         <label for="password" class="translate">Password</label>
                     </div>
-                    <div class="col s6 input-field">
-                        <input type="text" class="value" id="bing_maps_api_key" />
-                        <label for="bing_maps_api_key" class="translate">Bing-Maps (API-KEY)</label>
+
+                    <div class="input-field col s6">
+                        <select  class="value" id="mapprovider">
+                            <option value="osm">OpenStreetMaps</option>
+                            <option value="bing">Bing-Maps</option>
+                            <option value="here">Here-Maps</option>
+                            <option value="google">Google-Maps</option>
+                        </select>
+                        <label class="translate" for="mapprovider">Map-Provider</label>
                     </div>
+                    <div class="col s6 input-field" id="div_api_key">
+                        <input type="text" class="value" id="apikey" />
+                        <label for="apikey" class="translate">API-Key</label>
+                    </div>
+                    
                     <div class="input-field col s4">
-                        <select  class="value" id="minutes_to_refresh">
-                            <option value="3" class="translate">Every 3 minutes</option>
+                        <select  class="value" id="refresh">
                             <option value="5" class="translate">Every 5 minutes</option>
                             <option value="10" class="translate">Every 10 minutes</option>
+                            <option value="15" class="translate">Every 15 minutes</option>
+                            <option value="20" class="translate">Every 20 minutes</option>
+                            <option value="25" class="translate">Every 25 minutes</option>
+                            <option value="30" class="translate">Every 30 minutes</option>
+                            <option value="35" class="translate">Every 35 minutes</option>
+                            <option value="40" class="translate">Every 40 minutes</option>
+                            <option value="45" class="translate">Every 45 minutes</option>
+                            <option value="50" class="translate">Every 50 minutes</option>
+                            <option value="55" class="translate">Every 55 minutes</option>
+                            <option value="60" class="translate">Every 60 minutes</option>
                         </select>
-                        <label class="translate" for="minutes_to_refresh">Refresh Intervall</label>
+                        <label class="translate" for="refresh">Refresh Intervall</label>
                     </div>
                     <div class="input-field col s4">
                         <input type="checkbox" id="showfmly" class="value"/>
