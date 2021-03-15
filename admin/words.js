@@ -14,6 +14,30 @@ systemDictionary = {
           "pl": "Ustawienia adapterów dla Find-Me",
           "zh-cn": "Find-Me的适配器设置"
         },
+        "Timezone": {
+          "en": "Timezone",
+          "de": "Zeitzone",
+          "ru": "Часовой пояс",
+          "pt": "Fuso horário",
+          "nl": "Tijdzone",
+          "fr": "Fuseau horaire",
+          "it": "Fuso orario",
+          "es": "Zona horaria",
+          "pl": "Strefa czasowa",
+          "zh-cn": "时区"
+        },
+        "Date / Time Format": {
+          "en": "Date / Time Format",
+          "de": "Datums- / Uhrzeitformat",
+          "ru": "Формат даты / времени",
+          "pt": "Formato de data / hora",
+          "nl": "Datum- / tijdformaat",
+          "fr": "Format date / heure",
+          "it": "Formato data / ora",
+          "es": "Formato de fecha / hora",
+          "pl": "Format daty / godziny",
+          "zh-cn": "日期/时间格式"
+        },
         "Username": {
           "en": "Username",
           "de": "Nutzername",

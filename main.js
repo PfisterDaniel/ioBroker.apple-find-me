@@ -375,7 +375,7 @@ function CreateOrUpdateDevices(data)
                         },
                         native: {},
                     });          
-                    var timeStampString = moment(new Date(element.location.timeStamp)).tz('Europe/Berlin').format('YYYY-MM-DD HH:mm');
+                    var timeStampString = moment(new Date(element.location.timeStamp)).tz(adapter.config.timezone).format(adapter.config.timeformat);
                     adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.TimeStamp", timeStampString);
                     
                     adapter.setObjectNotExists(element.deviceClass + "." + element.deviceDiscoveryId + ".RefreshTimeStamp", {
@@ -391,7 +391,7 @@ function CreateOrUpdateDevices(data)
                         },
                         native: {},
                     });
-                    var refreshTimeStampString = moment(new Date()).tz('Europe/Berlin').format('YYYY-MM-DD HH:mm:ss');
+                    var refreshTimeStampString = moment(new Date()).tz(adapter.config.timezone).format(adapter.config.timeformat);
                     adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".RefreshTimeStamp", refreshTimeStampString);
 
                     adapter.setObjectNotExists(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.CurrentAddress", {
@@ -504,7 +504,7 @@ function CreateOrUpdateDevices(data)
                         type: "state",
                         common: {
                             name: "CurrentLocation",
-                            role: "text",
+                            role: "location",
                             type: "string",
                             read: true,
                             write: false,

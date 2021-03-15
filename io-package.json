@@ -77,6 +77,8 @@
         "apikey": "XXXX-XXXX-XXXX-XXXX",
         "refresh": "5",
         "showfmly": true,
+        "timezone":"Europe/Berlin",
+        "timeformat": "YYYY-MM-DD HH:mm:ss",
         "locations": [
             {
               "name": "Home",
