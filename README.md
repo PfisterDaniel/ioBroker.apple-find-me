@@ -3,7 +3,6 @@
 
 [![NPM version](http://img.shields.io/npm/v/iobroker.apple-find-me.svg)](https://www.npmjs.com/package/iobroker.apple-find-me)
 [![Downloads](https://img.shields.io/npm/dm/iobroker.apple-find-me.svg)](https://www.npmjs.com/package/iobroker.apple-find-me)
-[![Known Vulnerabilities](https://snyk.io/test/github/PfisterDaniel/ioBroker.apple-find-me/badge.svg)](https://snyk.io/test/github/PfisterDaniel/ioBroker.apple-find-me)
 
 [![NPM](https://nodei.co/npm/iobroker.apple-find-me.png?downloads=true)](https://nodei.co/npm/iobroker.apple-find-me/)
 
