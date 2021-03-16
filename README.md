@@ -1,4 +1,4 @@
-![Logo](admin/find-me.png)
+![Logo](https://raw.githubusercontent.com/PfisterDaniel/iobroker.apple-find-me/master/admin/find-me.png)
 # iobroker.apple-find-me
 
 [![NPM version](http://img.shields.io/npm/v/iobroker.apple-find-me.svg)](https://www.npmjs.com/package/iobroker.apple-find-me)
@@ -13,13 +13,13 @@ Apple Find Me Connector is a ioBroker-Adapter to get the current locations and o
 It work's without 2-Factor-Authentication (2FA) and retrive all connected devices include family devices.
 
 ## Configuration
-![ConfigImage](images/config.png)
+![ConfigImage](https://raw.githubusercontent.com/PfisterDaniel/iobroker.apple-find-me/master/images/config.png)
 
 ### Available Timezones
 Used Library [MomentJs](https://momentjs.com/timezone)
 
-## Example Ojects
-![Example](images/example_output.png)
+## Example Objects
+![Example](https://raw.githubusercontent.com/PfisterDaniel/iobroker.apple-find-me/master/images/example_output.png)
 
 
 
