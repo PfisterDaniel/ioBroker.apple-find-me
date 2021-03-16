@@ -17,7 +17,7 @@
     <link rel="stylesheet" type="text/css" href="style.css" />
     <script type="text/javascript" src="words.js"></script>
 
- <!--   <script type="text/javascript">
+    <!--   <script type="text/javascript">
     
         // This will be called by the admin adapter when the settings page loads
         function load(settings, onChange) {
@@ -61,162 +61,186 @@
     </script>
 
 -->
-<script type="text/javascript">
+    <script type="text/javascript">
+        var locations = [];
 
+        var secret;
 
-    var locations = [];
-
-    var secret;
-    function encrypt(key, value) {
-        var result = '';
-        for(var i = 0; i < value.length; ++i) {
-            result += String.fromCharCode(key[i % key.length].charCodeAt(0) ^ value.charCodeAt(i));
+        function encrypt(key, value) {
+            var result = '';
+            for (var i = 0; i < value.length; ++i) {
+                result += String.fromCharCode(key[i % key.length].charCodeAt(0) ^ value.charCodeAt(i));
+            }
+            return result;
         }
-        return result;
-    }
-    function decrypt(key, value) {
-        var result = '';
-        for(var i = 0; i < value.length; ++i) {
-            result += String.fromCharCode(key[i % key.length].charCodeAt(0) ^ value.charCodeAt(i));
-        }
-        return result;
-    }
 
-
-    // the function loadSettings has to exist ...
-    function loadHelper(settings, onChange) {
-        // example: select elements with id=key and class=value and insert value
-        if (!settings) return;
-        // if (settings.electricityPollingInterval === undefined) settings.electricityPollingInterval = 20;
-        $('.value').each(function () {
-               var $key = $(this);
-               var id = $key.attr('id');
-            if (id === 'password') {
-                settings[id] = decrypt(secret, settings[id]);
+        function decrypt(key, value) {
+            var result = '';
+            for (var i = 0; i < value.length; ++i) {
+                result += String.fromCharCode(key[i % key.length].charCodeAt(0) ^ value.charCodeAt(i));
             }
-            /*if(id === 'map_provider'){
-                showMessage(_($key.val()));
-            }*/
-            if (id === 'mapprovider') {
-                $('#mapprovider').val(settings[id]).select();
-                if(settings[id] === 'osm'){
-                    $('#div_api_key').hide();
-                }
-            }
-            if (id === 'refresh') {
-                $('#refresh').val(settings[id]).select();
-            }
-            if ($key.attr('type') === 'checkbox') {
-                // do not call onChange direct, because onChange could expect some arguments
-                $key.prop('checked', settings[id]).change(function() {
-                    onChange();
-                });
-            } else {
-                // do not call onChange direct, because onChange could expect some arguments
-
-                $key.val(settings[id]).change(function() {
-                    onChange();
-                }).keyup(function() {
-                    onChange();
-                });
-            }
-        });
-        locations = settings.locations || [];
-
-        for (var p = 0;  p< settings.locations.length; p++) {
-            settings.locations[p].name  = settings.locations[p].name || '';
-            settings.locations[p].latitude   = settings.locations[p].latitude || '';
-            settings.locations[p].longitude  = settings.locations[p].longitude || '';
-            settings.locations[p].active  = settings.locations[p].active || '';
+            return result;
         }
 
 
-        $('#mapprovider').change(function () {
-            var $mapprovider = $('#mapprovider');
-            switch ($mapprovider.val()) {
-                case 'osm':
-                    $('#div_api_key').hide();
-                    break;
-                case 'here':
-                    $('#div_api_key').show();
-                    break;
-                case 'bing':
-                    $('#div_api_key').show();
-                    break;
-                case 'google':
-                    $('#div_api_key').show();
-                    break;
-                default:
-            }
-        });
-
-        onChange(false);
-
-        values2table('locations', locations, onChange);
-        // function Materialize.updateTextFields(); to reinitialize all the Materialize labels on the page if you are dynamically adding inputs.
-        M.updateTextFields();
-    }
-
-
-
-    // This will be called by the admin adapter when the settings page loads
-    function load(settings, onChange) {
-        socket.emit('getObject', 'system.config', function (err, obj) {
-            secret = (obj.native ? obj.native.secret : '') || 'Zgfr56gFe87jJOM';
-            loadHelper(settings, onChange);
-        });
-        onChange(false);
-    }
-
-/*
-    // This will be called by the admin adapter when the settings page loads
-    function load(settings, onChange) {
-        // example: select elements with id=key and class=value and insert value
-        if (!settings) return;
-        $('.value').each(function () {
-            var $key = $(this);
-            var id = $key.attr('id');
-            if ($key.attr('type') === 'checkbox') {
-                // do not call onChange direct, because onChange could expect some arguments
-                $key.prop('checked', settings[id])
-                    .on('change', () => onChange())
-                    ;
-            } else {
-                // do not call onChange direct, because onChange could expect some arguments
-                $key.val(settings[id])
-                    .on('change', () => onChange())
-                    .on('keyup', () => onChange())
-                    ;
-            }
-        });
-        onChange(false);
-        // reinitialize all the Materialize labels on the page if you are dynamically adding inputs:
-        if (M) M.updateTextFields();
-    }
-*/
-
-    // This will be called by the admin adapter when the user presses the save button
-    function save(callback) {
-        // example: select elements with class=value and build settings object
-        var obj = {};
-        $('.value').each(function () {
-            var $this = $(this);
-            var id = $this.attr('id');
-            if ($this.attr('type') === 'checkbox') {
-                obj[id] = $this.prop('checked');
-            } else {
-                var value = $this.val();
+        // the function loadSettings has to exist ...
+        function loadHelper(settings, onChange) {
+            // example: select elements with id=key and class=value and insert value
+            if (!settings) return;
+            // if (settings.electricityPollingInterval === undefined) settings.electricityPollingInterval = 20;
+            $('.value').each(function() {
+                var $key = $(this);
+                var id = $key.attr('id');
                 if (id === 'password') {
-                    value = encrypt(secret, value);
+                    settings[id] = decrypt(secret, settings[id]);
                 }
-                console.log(id + " -> " + value);
-                obj[id] = value;
+                /*if(id === 'map_provider'){
+                    showMessage(_($key.val()));
+                }*/
+                if (id === 'mapprovider') {
+                    $('#mapprovider').val(settings[id]).select();
+                    switch (settings[id]) {
+                        case 'osm':
+                            $('#div_api_key').hide();
+                            break;
+                        case 'here':
+                            $('#div_api_key').show();
+                            $('#apikey_link').attr("href", "https://developer.here.com/");
+                            $('#apikey_link').attr("title", "Create API-KEY for Here-Maps");
+                            break;
+                        case 'bing':
+                            $('#div_api_key').show();
+                            $('#apikey_link').attr("href", "https://www.bingmapsportal.com/");
+                            $('#apikey_link').attr("title", "Create API-KEY for Bing-Maps");
+                            break;
+                        case 'google':
+                            $('#div_api_key').show();
+                            $('#apikey_link').attr("href", "https://developers.google.com/maps/documentation/javascript/get-api-key");
+                            $('#apikey_link').attr("title", "Create API-KEY for Google-Maps");
+                            break;
+                        default:
+                    }
+                }
+                if (id === 'refresh') {
+                    $('#refresh').val(settings[id]).select();
+                }
+                if ($key.attr('type') === 'checkbox') {
+                    // do not call onChange direct, because onChange could expect some arguments
+                    $key.prop('checked', settings[id]).change(function() {
+                        onChange();
+                    });
+                } else {
+                    // do not call onChange direct, because onChange could expect some arguments
+
+                    $key.val(settings[id]).change(function() {
+                        onChange();
+                    }).keyup(function() {
+                        onChange();
+                    });
+                }
+            });
+            locations = settings.locations || [];
+
+            for (var p = 0; p < settings.locations.length; p++) {
+                settings.locations[p].name = settings.locations[p].name || '';
+                settings.locations[p].latitude = settings.locations[p].latitude || '';
+                settings.locations[p].longitude = settings.locations[p].longitude || '';
+                settings.locations[p].active = settings.locations[p].active || '';
             }
-        });
-        obj.locations = table2values('locations');
-        callback(obj);
-    }
-</script>
+
+
+            $('#mapprovider').change(function() {
+                var $mapprovider = $('#mapprovider');
+                switch ($mapprovider.val()) {
+                    case 'osm':
+                        $('#div_api_key').hide();
+                        break;
+                    case 'here':
+                        $('#div_api_key').show();
+                        $('#apikey_link').attr("href", "https://developer.here.com/");
+                        $('#apikey_link').attr("title", "Create API-KEY for Here-Maps");
+                        break;
+                    case 'bing':
+                        $('#div_api_key').show();
+                        $('#apikey_link').attr("href", "https://www.bingmapsportal.com/");
+                        $('#apikey_link').attr("title", "Create API-KEY for Bing-Maps");
+                        break;
+                    case 'google':
+                        $('#div_api_key').show();
+                        $('#apikey_link').attr("href", "https://developers.google.com/maps/documentation/javascript/get-api-key");
+                        $('#apikey_link').attr("title", "Create API-KEY for Google-Maps");
+                        break;
+                    default:
+                }
+            });
+
+            onChange(false);
+
+            values2table('locations', locations, onChange);
+            // function Materialize.updateTextFields(); to reinitialize all the Materialize labels on the page if you are dynamically adding inputs.
+            M.updateTextFields();
+        }
+
+
+
+        // This will be called by the admin adapter when the settings page loads
+        function load(settings, onChange) {
+            socket.emit('getObject', 'system.config', function(err, obj) {
+                secret = (obj.native ? obj.native.secret : '') || 'Zgfr56gFe87jJOM';
+                loadHelper(settings, onChange);
+            });
+            onChange(false);
+        }
+
+        /*
+            // This will be called by the admin adapter when the settings page loads
+            function load(settings, onChange) {
+                // example: select elements with id=key and class=value and insert value
+                if (!settings) return;
+                $('.value').each(function () {
+                    var $key = $(this);
+                    var id = $key.attr('id');
+                    if ($key.attr('type') === 'checkbox') {
+                        // do not call onChange direct, because onChange could expect some arguments
+                        $key.prop('checked', settings[id])
+                            .on('change', () => onChange())
+                            ;
+                    } else {
+                        // do not call onChange direct, because onChange could expect some arguments
+                        $key.val(settings[id])
+                            .on('change', () => onChange())
+                            .on('keyup', () => onChange())
+                            ;
+                    }
+                });
+                onChange(false);
+                // reinitialize all the Materialize labels on the page if you are dynamically adding inputs:
+                if (M) M.updateTextFields();
+            }
+        */
+
+        // This will be called by the admin adapter when the user presses the save button
+        function save(callback) {
+            // example: select elements with class=value and build settings object
+            var obj = {};
+            $('.value').each(function() {
+                var $this = $(this);
+                var id = $this.attr('id');
+                if ($this.attr('type') === 'checkbox') {
+                    obj[id] = $this.prop('checked');
+                } else {
+                    var value = $this.val();
+                    if (id === 'password') {
+                        value = encrypt(secret, value);
+                    }
+                    console.log(id + " -> " + value);
+                    obj[id] = value;
+                }
+            });
+            obj.locations = table2values('locations');
+            callback(obj);
+        }
+    </script>
 
 </head>
 
@@ -236,7 +260,7 @@
         <div class="row">
             <div class="col s12">
                 <ul class="tabs">
-                    <li class="tab col s2"><a href="#tab-main"      class="translate active">adaptersettings</a></li>
+                    <li class="tab col s2"><a href="#tab-main" class="translate active">adaptersettings</a></li>
                     <li class="tab col s2"><a href="#tab-locations" class="translate">Locations</a></li>
                 </ul>
             </div>
@@ -257,7 +281,7 @@
                     </div>
 
                     <div class="input-field col s6">
-                        <select  class="value" id="mapprovider">
+                        <select class="value" id="mapprovider">
                             <option value="osm">OpenStreetMaps</option>
                             <option value="bing">Bing-Maps</option>
                             <option value="here">Here-Maps</option>
@@ -265,10 +289,13 @@
                         </select>
                         <label class="translate" for="mapprovider">Map-Provider</label>
                     </div>
+
                     <div class="col s6 input-field" id="div_api_key">
                         <input type="text" class="value" id="apikey" />
-                        <label for="apikey" class="translate">API-Key</label>
+                        <label id="apikey" for="apikey" class="translate">API-Key</label>
+                        <a id="apikey_link" href="https://developer.here.com/" target="_blank" title="Create API-Key"><img src="key.png" class="keyIcon" /></a>
                     </div>
+
                     <div class="col s6 input-field">
                         <input type="text" class="value" id="timezone" />
                         <label for="timezone" class="translate">Timezone</label>
@@ -277,8 +304,8 @@
                         <input type="text" class="value" id="timeformat" />
                         <label for="timeformat" class="translate">Date / Time Format</label>
                     </div>
-                    <div class="input-field col s4">
-                        <select  class="value" id="refresh">
+                    <div class="input-field col s2">
+                        <select class="value" id="refresh">
                             <option value="5" class="translate">Every 5 minutes</option>
                             <option value="10" class="translate">Every 10 minutes</option>
                             <option value="15" class="translate">Every 15 minutes</option>
@@ -294,14 +321,14 @@
                         </select>
                         <label class="translate" for="refresh">Refresh Intervall</label>
                     </div>
-                    <div class="input-field col s4">
-                        <input type="checkbox" id="showfmly" class="value"/>
+                    <div class="input-field col s12">
+                        <input type="checkbox" id="showfmly" class="value" />
                         <span for="showfmly" class="translate">Show devices from familygroup</span>
                     </div>
-                    
+
                 </div>
             </div>
-        
+
             <div id="tab-locations" class="col s12 page">
                 <div class="row">
                     <div class="col s12" id="locations">
@@ -309,13 +336,13 @@
                         <div class="table-values-div">
                             <table class="table-values">
                                 <thead>
-                                <tr>
-                                    <th data-name="name"        class="translate">name</th>
-                                    <th data-name="latitude"    class="translate">latitude</th>
-                                    <th data-name="longitude"   class="translate">longitude</th>
-                                    <th data-name="active"   data-type="checkbox" class="translate">active</th>
-                                    <th data-buttons="delete up down"></th>
-                                </tr>
+                                    <tr>
+                                        <th data-name="name" class="translate">name</th>
+                                        <th data-name="latitude" class="translate">latitude</th>
+                                        <th data-name="longitude" class="translate">longitude</th>
+                                        <th data-name="active" data-type="checkbox" class="translate">active</th>
+                                        <th data-buttons="delete up down"></th>
+                                    </tr>
                                 </thead>
                             </table>
                         </div>
