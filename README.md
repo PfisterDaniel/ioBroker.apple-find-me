@@ -18,6 +18,12 @@ It work's without 2-Factor-Authentication (2FA) and retrive all connected device
 ### Available Timezones
 Used Library [MomentJs](https://momentjs.com/timezone)
 
+### Pages for API-KEY's:
+* [HereMaps](https://developer.here.com/)
+* [BingMaps](https://www.bingmapsportal.com/)
+* [GoogleMaps](https://developers.google.com/maps/documentation/javascript/get-api-key)
+
+
 ## Example Objects
 ![Example](https://raw.githubusercontent.com/PfisterDaniel/iobroker.apple-find-me/master/images/example_output.png)
 
