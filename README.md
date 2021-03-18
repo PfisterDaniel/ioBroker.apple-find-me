@@ -31,6 +31,13 @@ Used Library [MomentJs](https://momentjs.com/timezone)
 
 ## Changelog
 
+### 0.0.4
+* Bugfix with Time-Format in the Objectlist (Set default rule from value.time to text)
+
+### 0.0.3
+* Add Timezone and Time-Formats
+* Bugfixes
+
 ### 0.0.2
 * Added features and bugfixes
 
