@@ -334,7 +334,7 @@ function CreateOrUpdateDevices(data)
                         type: "state",
                         common: {
                             name: "TimeStamp",
-                            role: "value.time",
+                            role: "text",
                             type: "string",
                             read: true,
                             write: false,
@@ -350,7 +350,7 @@ function CreateOrUpdateDevices(data)
                         type: "state",
                         common: {
                             name: "RefreshTimeStamp",
-                            role: "value.time",
+                            role: "text",
                             type: "string",
                             read: true,
                             write: false,
