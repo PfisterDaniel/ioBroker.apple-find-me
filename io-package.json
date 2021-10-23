@@ -52,6 +52,9 @@
             "iCloud",
             "Location"
         ],
+        "docs": {
+            "en": "docs/en/README.md"
+        },
         "license": "MIT",
         "platform": "Javascript/Node.js",
         "main": "main.js",
@@ -62,13 +65,14 @@
         "loglevel": "info",
         "mode": "daemon",
         "type": "geoposition",
+        "tier": 2,
+        "connectionType": "cloud",
+        "dataSource": "poll",
         "compact": true,
         "materialize": true,
-        "dependencies": [
-            {
-                "js-controller": ">=1.4.2"
-            }
-        ]
+        "dependencies": [{
+            "js-controller": ">=1.4.2"
+        }]
     },
     "native": {
         "username": "email@me.com",
@@ -77,16 +81,14 @@
         "apikey": "XXXX-XXXX-XXXX-XXXX",
         "refresh": "5",
         "showfmly": true,
-        "timezone":"Europe/Berlin",
+        "timezone": "Europe/Berlin",
         "timeformat": "YYYY-MM-DD HH:mm:ss",
-        "locations": [
-            {
-              "name": "Home",
-              "latitude": "0.000000",
-              "longitude": "0.00000",
-              "active": false
-            }
-        ]
+        "locations": [{
+            "name": "Home",
+            "latitude": "0.000000",
+            "longitude": "0.00000",
+            "active": false
+        }]
     },
     "objects": [],
     "instanceObjects": []

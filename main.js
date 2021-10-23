@@ -169,7 +169,7 @@ function CreateOrUpdateDevices(data) {
                         native: {},
                     });
 
-                    adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".ModelType", element.rawDeviceModel);
+                    adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".ModelType", element.rawDeviceModel, true);
 
                     adapter.setObjectNotExists(element.deviceClass + "." + element.deviceDiscoveryId + ".ModelName", {
                         type: "state",
@@ -185,14 +185,14 @@ function CreateOrUpdateDevices(data) {
                         native: {},
                     });
 
-                    adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".ModelName", element.deviceDisplayName);
+                    adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".ModelName", element.deviceDisplayName, true);
 
                     adapter.setObjectNotExists(element.deviceClass + "." + element.deviceDiscoveryId + ".BatteryLevel", {
                         type: "state",
                         common: {
                             name: "BatteryLevel",
                             role: "level",
-                            type: "number",
+                            type: "string",
                             min: 0,
                             max: 100,
                             unit: "%",
@@ -203,7 +203,7 @@ function CreateOrUpdateDevices(data) {
                         },
                         native: {},
                     });
-                    adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".BatteryLevel", (element.batteryLevel * 100).toString().split('.')[0]);
+                    adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".BatteryLevel", parseInt((element.batteryLevel * 100).toString().split('.')[0]), true);
 
                     adapter.setObjectNotExists(element.deviceClass + "." + element.deviceDiscoveryId + ".BatteryState", {
                         type: "state",
@@ -218,7 +218,7 @@ function CreateOrUpdateDevices(data) {
                         },
                         native: {},
                     });
-                    adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".BatteryState", element.batteryStatus);
+                    adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".BatteryState", element.batteryStatus, true);
 
                     adapter.setObjectNotExists(element.deviceClass + "." + element.deviceDiscoveryId + ".ModelImage", {
                         type: "state",
@@ -233,7 +233,7 @@ function CreateOrUpdateDevices(data) {
                         },
                         native: {},
                     });
-                    adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".ModelImage", deviceImageUrl);
+                    adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".ModelImage", deviceImageUrl, true);
 
                     adapter.setObjectNotExists(element.deviceClass + "." + element.deviceDiscoveryId + ".DeviceID", {
                         type: "state",
@@ -248,7 +248,7 @@ function CreateOrUpdateDevices(data) {
                         },
                         native: {},
                     });
-                    adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".DeviceID", element.id);
+                    adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".DeviceID", element.id, true);
 
                     //Device has Location Parameters
                     if (element.hasOwnProperty('location') && element.location != undefined && element.location != null) {
@@ -266,7 +266,7 @@ function CreateOrUpdateDevices(data) {
                             },
                             native: {},
                         });
-                        adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.Latitude", element.location.latitude);
+                        adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.Latitude", element.location.latitude, true);
 
                         adapter.setObjectNotExists(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.Longitude", {
                             type: "state",
@@ -281,7 +281,7 @@ function CreateOrUpdateDevices(data) {
                             },
                             native: {},
                         });
-                        adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.Longitude", element.location.longitude);
+                        adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.Longitude", element.location.longitude, true);
 
                         adapter.setObjectNotExists(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.Altitude", {
                             type: "state",
@@ -296,7 +296,7 @@ function CreateOrUpdateDevices(data) {
                             },
                             native: {},
                         });
-                        adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.Altitude", element.location.altitude);
+                        adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.Altitude", element.location.altitude, true);
 
                         adapter.setObjectNotExists(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.PositionType", {
                             type: "state",
@@ -311,7 +311,7 @@ function CreateOrUpdateDevices(data) {
                             },
                             native: {},
                         });
-                        adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.PositionType", element.location.positionType);
+                        adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.PositionType", element.location.positionType, true);
 
                         adapter.setObjectNotExists(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.Accuracy", {
                             type: "state",
@@ -328,7 +328,7 @@ function CreateOrUpdateDevices(data) {
                             },
                             native: {},
                         });
-                        adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.Accuracy", Math.round(element.location.horizontalAccuracy));
+                        adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.Accuracy", Math.round(element.location.horizontalAccuracy), true);
 
                         adapter.setObjectNotExists(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.TimeStamp", {
                             type: "state",
@@ -344,7 +344,7 @@ function CreateOrUpdateDevices(data) {
                             native: {},
                         });
                         var timeStampString = moment(new Date(element.location.timeStamp)).tz(adapter.config.timezone).format(adapter.config.timeformat);
-                        adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.TimeStamp", timeStampString);
+                        adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.TimeStamp", timeStampString, true);
 
                         adapter.setObjectNotExists(element.deviceClass + "." + element.deviceDiscoveryId + ".RefreshTimeStamp", {
                             type: "state",
@@ -360,7 +360,7 @@ function CreateOrUpdateDevices(data) {
                             native: {},
                         });
                         var refreshTimeStampString = moment(new Date()).tz(adapter.config.timezone).format(adapter.config.timeformat);
-                        adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".RefreshTimeStamp", refreshTimeStampString);
+                        adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".RefreshTimeStamp", refreshTimeStampString, true);
 
                         adapter.setObjectNotExists(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.CurrentAddress", {
                             type: "state",
@@ -421,47 +421,47 @@ function CreateOrUpdateDevices(data) {
                                         } else {
                                             CurrentAddress = "Response has no Address Object";
                                         }
-                                        adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.CurrentAddress", CurrentAddress);
+                                        adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.CurrentAddress", CurrentAddress, true);
                                     } else {
                                         adapter.log.error("Error on getting address from OpenStreetMaps");
-                                        adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.CurrentAddress", "< ErrorCode " + res.statusCode + " >");
+                                        adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.CurrentAddress", "< ErrorCode " + res.statusCode + " >", true);
                                     }
                                 } else if (adapter.config.mapprovider === 'bing') {
                                     if (!err && res.statusCode == 200) {
                                         var CurrentAddress = data.resourceSets[0].resources[0].address.formattedAddress;
-                                        adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.CurrentAddress", CurrentAddress);
+                                        adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.CurrentAddress", CurrentAddress, true);
                                     } else {
                                         if (res.statusCode == 401) {
                                             adapter.log.error("API-Key not valid. Please Validate your API-KEY!");
-                                            adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.CurrentAddress", "< No valid API-KEY >");
+                                            adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.CurrentAddress", "< No valid API-KEY >", true);
                                         }
                                     }
                                 } else if (adapter.config.mapprovider === 'here') {
                                     if (!err && res.statusCode == 200) {
                                         try {
                                             var CurrentAddress = data.items[0].address.label;
-                                            adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.CurrentAddress", CurrentAddress);
+                                            adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.CurrentAddress", CurrentAddress, true);
                                         } catch (e) {
                                             adapter.log.error("Error on getting address from Here-Maps: " + e);
-                                            adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.CurrentAddress", "< Error " + e + " >");
+                                            adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.CurrentAddress", "< Error " + e + " >", true);
                                         }
                                     } else {
                                         adapter.log.error("Error on getting address from Here-Maps");
-                                        adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.CurrentAddress", "< ErrorCode " + res.statusCode + " >");
+                                        adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.CurrentAddress", "< ErrorCode " + res.statusCode + " >", true);
                                     }
                                 } else if (adapter.config.mapprovider === 'google') {
                                     if (!err && res.statusCode == 200) {
                                         if (data.status == "OK") {
                                             var CurrentAddress = data.results[0].formatted_address;
-                                            adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.CurrentAddress", CurrentAddress);
+                                            adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.CurrentAddress", CurrentAddress, true);
                                         } else {
                                             adapter.log.error("Error on getting address from Google-Maps");
-                                            adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.CurrentAddress", "< Error: " + data.status + " >");
+                                            adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.CurrentAddress", "< Error: " + data.status + " >", true);
                                         }
 
                                     } else {
                                         adapter.log.error("Error on getting address from Google-Maps");
-                                        adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.CurrentAddress", "< ErrorCode " + res.statusCode + " >");
+                                        adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.CurrentAddress", "< ErrorCode " + res.statusCode + " >", true);
                                     }
                                 }
                             });
@@ -511,12 +511,12 @@ function CreateOrUpdateDevices(data) {
                                 loc
                             )
                             if (smallestDistanceValue.distance < 150) {
-                                adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.CurrentLocation", smallestDistanceValue.name);
+                                adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.CurrentLocation", smallestDistanceValue.name, true);
                             } else {
-                                adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.CurrentLocation", "Unknown");
+                                adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.CurrentLocation", "Unknown", true);
                             }
                         } else {
-                            adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.CurrentLocation", "< No Places Defined >");
+                            adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.CurrentLocation", "< No Places Defined >", true);
                         }
                     }
                 }
