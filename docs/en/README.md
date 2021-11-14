@@ -10,7 +10,7 @@
 
 Apple Find Me Connector is a ioBroker-Adapter to get the current locations and other metrics of connected Apple devices.
 
-It work's without 2-Factor-Authentication (2FA) and retrive all connected devices include family devices.
+It work's without 2-Factor-Authentication (2FA) and retrive all connected devices.
 
 ## Configuration
 ![ConfigImage](https://raw.githubusercontent.com/PfisterDaniel/iobroker.apple-find-me/master/images/config.png)
@@ -31,8 +31,13 @@ Used Library [MomentJs](https://momentjs.com/timezone)
 
 ## Changelog
 
+### 0.0.5
+* Add Trier
+* Change Error-Count intervall
+
 ### 0.0.4
 * Bugfix with Time-Format in the Objectlist (Set default rule from value.time to text)
+* Family-Devices not longer working
 
 ### 0.0.3
 * Add Timezone and Time-Formats
