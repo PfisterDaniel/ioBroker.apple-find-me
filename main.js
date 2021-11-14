@@ -102,7 +102,7 @@ function RequestData() {
                     rtn({ "statusCode": res.statusCode, "response": null })
                 } else {
                     ErrorCounter = ErrorCounter + 1;
-                    if (ErrorCounter == 3) {
+                    if (ErrorCounter == 5) {
                         adapter.log.error("Error on HTTP-Request. Please check your credentials. StatusCode: " + res.statusCode + " Retry in " + adapter.config.refresh + " minutes. (" + ErrorCounter.toString() + "/3)");
                         adapter.log.error("HTTP request failed for the third time, adapter is deactivated to prevent deactivation of the iCloud account.");
                         adapter.setForeignState("system.adapter." + adapter.namespace + ".alive", false);
