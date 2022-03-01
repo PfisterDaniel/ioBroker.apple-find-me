@@ -1,6 +1,6 @@
 {
     "common": {
-        "name": "apple-find-me",
+        "name": "",
         "version": "0.0.6",
         "news": {
             "0.0.1": {
@@ -14,6 +14,18 @@
                 "es": "Versión inicial",
                 "pl": "Pierwsze wydanie",
                 "zh-cn": "首次出版"
+            },
+            "0.0.6": {
+                "en": "Bugfixes",
+                "de": "Fehlerbehebung",
+                "ru": "Исправление ошибок",
+                "pt": "Correções de bugs",
+                "nl": "Bugfixes",
+                "fr": "Corrections de bogues",
+                "it": "Correzioni di bug",
+                "es": "Corrección de errores",
+                "pl": "Poprawki",
+                "zh-cn": "Bug修复"
             }
         },
         "title": "Apple Find Me",
@@ -71,7 +83,7 @@
         "compact": true,
         "materialize": true,
         "dependencies": [{
-            "js-controller": ">=1.4.2"
+            "js-controller": ">=2.0.0"
         }]
     },
     "native": {
