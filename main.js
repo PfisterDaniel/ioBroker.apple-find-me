@@ -192,7 +192,7 @@ function CreateOrUpdateDevices(data) {
                         common: {
                             name: "BatteryLevel",
                             role: "level",
-                            type: "string",
+                            type: "number",
                             min: 0,
                             max: 100,
                             unit: "%",
