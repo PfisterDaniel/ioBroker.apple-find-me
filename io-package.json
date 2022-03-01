@@ -1,6 +1,6 @@
 {
     "common": {
-        "name": "",
+        "name": "apple-find-me",
         "version": "0.0.6",
         "news": {
             "0.0.1": {
@@ -54,7 +54,7 @@
             "zh-cn": "Apple Find Me连接器"
         },
         "authors": [
-            "Daniel Pfister <kontakt@daniel-pfister.de>"
+            "Daniel Lippert <kontakt@daniel-lippert.de>"
         ],
         "keywords": [
             "Apple",
@@ -65,6 +65,7 @@
             "Location"
         ],
         "docs": {
+            "de": "docs/en/README.md",
             "en": "docs/en/README.md"
         },
         "license": "MIT",
