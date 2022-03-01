@@ -1,10 +1,10 @@
 {
     "name": "iobroker.apple-find-me",
-    "version": "0.0.5",
+    "version": "0.0.6",
     "description": "Apple Find Me Connector",
     "author": {
         "name": "MasterDan",
-        "email": "kontakt@daniel-pfister.de"
+        "email": "kontakt@daniel-lippert.de"
     },
     "homepage": "https://github.com/PfisterDaniel/ioBroker.apple-find-me",
     "license": "MIT",

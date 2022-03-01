@@ -1,7 +1,7 @@
 {
     "common": {
         "name": "apple-find-me",
-        "version": "0.0.5",
+        "version": "0.0.6",
         "news": {
             "0.0.1": {
                 "en": "initial release",
