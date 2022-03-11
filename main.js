@@ -123,7 +123,7 @@ function CreateOrUpdateDevices(data) {
             DevColor = "-" + element.deviceColor;
         }
         
-        if (element.deviceDiscoveryId != undefined && element.deviceDiscoveryId != null){
+        if (element.deviceDiscoveryId != undefined && element.deviceDiscoveryId != null && element.deviceDiscoveryId != ""){
         var deviceImageUrl = 'https://statici.icloud.com/fmipmobile/deviceImages-9.0/' + element.deviceClass + '/' + element.rawDeviceModel + DevColor + '/online-infobox.png';
         //adapter.log.info(JSON.stringify(element));
         urllib.request(deviceImageUrl, {
