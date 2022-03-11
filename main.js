@@ -122,6 +122,8 @@ function CreateOrUpdateDevices(data) {
         if (!element.deviceColor && element.deviceColor != "" && element.deviceColor != undefined) {
             DevColor = "-" + element.deviceColor;
         }
+        
+        if (element.deviceDiscoveryId != undefined && element.deviceDiscoveryId != null){
         var deviceImageUrl = 'https://statici.icloud.com/fmipmobile/deviceImages-9.0/' + element.deviceClass + '/' + element.rawDeviceModel + DevColor + '/online-infobox.png';
         //adapter.log.info(JSON.stringify(element));
         urllib.request(deviceImageUrl, {
@@ -521,7 +523,9 @@ function CreateOrUpdateDevices(data) {
                     }
                 }
             });
-    });
+    
+    } 
+   });
 }
 
 
