@@ -122,6 +122,8 @@ function CreateOrUpdateDevices(data) {
         if (!element.deviceColor && element.deviceColor != "" && element.deviceColor != undefined) {
             DevColor = "-" + element.deviceColor;
         }
+        
+        if (element.deviceDiscoveryId != undefined && element.deviceDiscoveryId != null && element.deviceDiscoveryId != ""){
         var deviceImageUrl = 'https://statici.icloud.com/fmipmobile/deviceImages-9.0/' + element.deviceClass + '/' + element.rawDeviceModel + DevColor + '/online-infobox.png';
         //adapter.log.info(JSON.stringify(element));
         urllib.request(deviceImageUrl, {
@@ -282,6 +284,21 @@ function CreateOrUpdateDevices(data) {
                             native: {},
                         });
                         adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.Longitude", element.location.longitude, true);
+
+                        adapter.setObjectNotExists(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.Position", {
+                            type: "state",
+                            common: {
+                                name: "Position",
+                                role: "sensor",
+                                type: "string",
+                                read: true,
+                                write: false,
+                                desc: "Position",
+                                def: 0
+                            },
+                            native: {},
+                        });
+                        adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.Position", element.location.latitude + ", " + element.location.longitude, true);
 
                         adapter.setObjectNotExists(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.Altitude", {
                             type: "state",
@@ -521,7 +538,9 @@ function CreateOrUpdateDevices(data) {
                     }
                 }
             });
-    });
+    
+    } 
+   });
 }
 
 
