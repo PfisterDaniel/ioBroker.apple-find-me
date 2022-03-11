@@ -31,6 +31,10 @@ Used Library [MomentJs](https://momentjs.com/timezone)
 
 ## Changelog
 
+### 0.0.6
+* Bugfix #2
+* Add Position State
+
 ### 0.0.5
 * Add Trier
 * Change Error-Count intervall
