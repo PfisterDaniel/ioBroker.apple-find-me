@@ -285,6 +285,21 @@ function CreateOrUpdateDevices(data) {
                         });
                         adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.Longitude", element.location.longitude, true);
 
+                        adapter.setObjectNotExists(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.Position", {
+                            type: "state",
+                            common: {
+                                name: "Position",
+                                role: "sensor",
+                                type: "string",
+                                read: true,
+                                write: false,
+                                desc: "Position",
+                                def: 0
+                            },
+                            native: {},
+                        });
+                        adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.Position", element.location.latitude + ", " + element.location.longitude, true);
+
                         adapter.setObjectNotExists(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.Altitude", {
                             type: "state",
                             common: {
