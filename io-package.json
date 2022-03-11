@@ -1,7 +1,7 @@
 {
     "common": {
         "name": "apple-find-me",
-        "version": "0.0.6",
+        "version": "0.0.7",
         "news": {
             "0.0.1": {
                 "en": "initial release",
@@ -16,6 +16,18 @@
                 "zh-cn": "首次出版"
             },
             "0.0.6": {
+                "en": "Bugfixes",
+                "de": "Fehlerbehebung",
+                "ru": "Исправление ошибок",
+                "pt": "Correções de bugs",
+                "nl": "Bugfixes",
+                "fr": "Corrections de bogues",
+                "it": "Correzioni di bug",
+                "es": "Corrección de errores",
+                "pl": "Poprawki",
+                "zh-cn": "Bug修复"
+            },
+            "0.0.7": {
                 "en": "Bugfixes",
                 "de": "Fehlerbehebung",
                 "ru": "Исправление ошибок",

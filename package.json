@@ -1,6 +1,6 @@
 {
     "name": "iobroker.apple-find-me",
-    "version": "0.0.6",
+    "version": "0.0.7",
     "description": "Apple Find Me Connector",
     "author": {
         "name": "MasterDan",
