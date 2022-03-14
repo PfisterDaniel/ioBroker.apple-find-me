@@ -38,15 +38,6 @@ jobs:
       - name: Install Dependencies
         run: npm install
 
-      #      - name: Perform a type check
-      #        run: npm run check:ts
-      #        env:
-      #          CI: true
-      # - name: Lint TypeScript code
-      #   run: npm run lint
-  #      - name: Test package files
-  #        run: npm run test:package
-
   # Runs adapter tests on all supported node versions and OSes
   adapter-tests:
     if: contains(github.event.head_commit.message, '[skip ci]') == false
@@ -68,17 +59,6 @@ jobs:
 
       - name: Install Dependencies
         run: npm install
-
-  #      - name: Run local tests
-  #        run: npm test
-  #      - name: Run unit tests
-  #        run: npm run test:unit
-  #      - name: Run integration tests # (linux/osx)
-  #        if: startsWith(runner.OS, 'windows') == false
-  #        run: DEBUG=testing:* npm run test:integration
-  #      - name: Run integration tests # (windows)
-  #        if: startsWith(runner.OS, 'windows')
-  #        run: set DEBUG=testing:* & npm run test:integration
 
   # Deploys the final package to NPM
   deploy:
@@ -137,20 +117,3 @@ jobs:
           # Prerelease versions create pre-releases on Github
           prerelease: ${{ contains(steps.extract_release.outputs.VERSION, '-') }}
           body: ${{ steps.extract_release.outputs.BODY }}
-
-#      - name: Notify Sentry.io about the release
-#        run: |
-#          npm i -g @sentry/cli
-#          export SENTRY_AUTH_TOKEN=${{ secrets.SENTRY_AUTH_TOKEN }}
-#          export SENTRY_URL=https://sentry.iobroker.net
-#          export SENTRY_ORG=iobroker
-#          export SENTRY_PROJECT=iobroker-accuweather
-#          export SENTRY_VERSION=iobroker.accuweather@${{ steps.extract_release.outputs.VERSION }}
-#          sentry-cli releases new $SENTRY_VERSION
-#          sentry-cli releases finalize $SENTRY_VERSION
-
-        # Add the following line BEFORE finalize if repositories are connected in Sentry
-        # sentry-cli releases set-commits $SENTRY_VERSION --auto
-
-        # Add the following line BEFORE finalize if sourcemap uploads are needed
-        # sentry-cli releases files $SENTRY_VERSION upload-sourcemaps build/
