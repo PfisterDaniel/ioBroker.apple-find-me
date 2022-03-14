@@ -31,6 +31,9 @@ Used Library [MomentJs](https://momentjs.com/timezone)
 
 ## Changelog
 
+### 0.0.10
+* Add GitHub Workflow
+
 ### 0.0.9
 * Fix Issue with Github Actions
 

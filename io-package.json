@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "apple-find-me",
-    "version": "0.0.9",
+    "version": "0.0.10",
     "news": {
       "0.0.1": {
         "en": "initial release",
@@ -62,6 +62,18 @@
         "es": "Soluciona problemas con el flujo de trabajo de GitHub",
         "pl": "Naprawia problemy z przepływem pracy GitHub",
         "zh-cn": "修复 GitHub 工作流的问题"
+      },
+      "0.0.10": {
+        "en": "Add GitHub Workflow",
+        "de": "GitHub-Workflow hinzufügen",
+        "ru": "Добавить рабочий процесс GitHub",
+        "pt": "Adicionar fluxo de trabalho do GitHub",
+        "nl": "GitHub-werkstroom toevoegen",
+        "fr": "Ajouter un flux de travail GitHub",
+        "it": "Aggiungi flusso di lavoro GitHub",
+        "es": "Agregar flujo de trabajo de GitHub",
+        "pl": "Dodaj przepływ pracy GitHub",
+        "zh-cn": "添加 GitHub 工作流"
       }
 
     },
