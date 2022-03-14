@@ -31,6 +31,12 @@ Used Library [MomentJs](https://momentjs.com/timezone)
 
 ## Changelog
 
+### 0.0.8
+* Fixes Issues for publish the Adapter to IoBroker-Repository
+
+### 0.0.7
+* Bugfix
+
 ### 0.0.6
 * Bugfix #2
 * Add Position State

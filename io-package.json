@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "apple-find-me",
-    "version": "0.0.7",
+    "version": "0.0.8",
     "news": {
       "0.0.1": {
         "en": "initial release",
@@ -28,17 +28,30 @@
         "zh-cn": "Bug修复"
       },
       "0.0.7": {
-        "en": "Bugfixes",
-        "de": "Fehlerbehebung",
-        "ru": "Исправление ошибок",
-        "pt": "Correções de bugs",
-        "nl": "Bugfixes",
-        "fr": "Corrections de bogues",
-        "it": "Correzioni di bug",
-        "es": "Corrección de errores",
-        "pl": "Poprawki",
-        "zh-cn": "Bug修复"
+        "en": "Add Position State and Bugfixes",
+        "de": "Positionsstatus und Bugfixes hinzugefügt",
+        "ru": "Добавить состояние позиции и исправления",
+        "pt": "Adicionar estado de posição e correções de bugs",
+        "nl": "Positiestatus en bugfixes toevoegen",
+        "fr": "Ajouter un état de position et des corrections de bogues",
+        "it": "Aggiungi lo stato della posizione e correzioni di bug",
+        "es": "Agregar estado de posición y corrección de errores",
+        "pl": "Dodaj stan pozycji i poprawki błędów",
+        "zh-cn": "添加位置状态和错误修复"
+      },
+      "0.0.8": {
+        "en": "Fixes Issues for publish the Adapter to IoBroker-Repository",
+        "de": "Behebt Probleme beim Veröffentlichen des Adapters im ioBroker-Repository",
+        "ru": "Исправлены проблемы с публикацией адаптера в ioBroker-Repository.",
+        "pt": "Corrige problemas para publicar o adaptador no repositório ioBroker",
+        "nl": "Lost problemen op voor het publiceren van de adapter naar ioBroker-Repository",
+        "fr": "Résout les problèmes de publication de l'adaptateur vers ioBroker-Repository",
+        "it": "Risolve i problemi per la pubblicazione dell'adattatore in ioBroker-Repository",
+        "es": "Soluciona problemas para publicar el adaptador en ioBroker-Repository",
+        "pl": "Rozwiązuje problemy z publikacją adaptera do ioBroker-Repository",
+        "zh-cn": "修复了将适配器发布到 ioBroker-Repository 的问题"
       }
+
     },
     "title": "Apple Find Me",
     "titleLang": {
