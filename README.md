@@ -31,6 +31,9 @@ Used Library [MomentJs](https://momentjs.com/timezone)
 
 ## Changelog
 
+### 0.0.9
+* Fix Issue with Github Actions
+
 ### 0.0.8
 * Fixes Issues for publish the Adapter to IoBroker-Repository
 
