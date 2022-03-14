@@ -50,6 +50,18 @@
         "es": "Soluciona problemas para publicar el adaptador en ioBroker-Repository",
         "pl": "Rozwiązuje problemy z publikacją adaptera do ioBroker-Repository",
         "zh-cn": "修复了将适配器发布到 ioBroker-Repository 的问题"
+      },
+      "0.0.9": {
+        "en": "Fixes Issues with GitHub Workflow",
+        "de": "Behebt Probleme mit dem GitHub-Workflow",
+        "ru": "Устраняет проблемы с рабочим процессом GitHub",
+        "pt": "Corrige problemas com o fluxo de trabalho do GitHub",
+        "nl": "Lost problemen op met GitHub Workflow",
+        "fr": "Résout les problèmes avec GitHub Workflow",
+        "it": "Risolve i problemi con il flusso di lavoro GitHub",
+        "es": "Soluciona problemas con el flujo de trabajo de GitHub",
+        "pl": "Naprawia problemy z przepływem pracy GitHub",
+        "zh-cn": "修复 GitHub 工作流的问题"
       }
 
     },
