@@ -1,120 +1,132 @@
 {
-    "common": {
-        "name": "apple-find-me",
-        "version": "0.0.7",
-        "news": {
-            "0.0.1": {
-                "en": "initial release",
-                "de": "Erstveröffentlichung",
-                "ru": "Начальная версия",
-                "pt": "lançamento inicial",
-                "nl": "Eerste uitgave",
-                "fr": "Première version",
-                "it": "Versione iniziale",
-                "es": "Versión inicial",
-                "pl": "Pierwsze wydanie",
-                "zh-cn": "首次出版"
-            },
-            "0.0.6": {
-                "en": "Bugfixes",
-                "de": "Fehlerbehebung",
-                "ru": "Исправление ошибок",
-                "pt": "Correções de bugs",
-                "nl": "Bugfixes",
-                "fr": "Corrections de bogues",
-                "it": "Correzioni di bug",
-                "es": "Corrección de errores",
-                "pl": "Poprawki",
-                "zh-cn": "Bug修复"
-            },
-            "0.0.7": {
-                "en": "Bugfixes",
-                "de": "Fehlerbehebung",
-                "ru": "Исправление ошибок",
-                "pt": "Correções de bugs",
-                "nl": "Bugfixes",
-                "fr": "Corrections de bogues",
-                "it": "Correzioni di bug",
-                "es": "Corrección de errores",
-                "pl": "Poprawki",
-                "zh-cn": "Bug修复"
-            }
-        },
-        "title": "Apple Find Me",
-        "titleLang": {
-            "en": "Apple Find Me",
-            "de": "Apple Find Me",
-            "ru": "Apple Найди меня",
-            "pt": "Apple Find Me",
-            "nl": "Apple vind mij",
-            "fr": "Apple Find Me",
-            "it": "Apple Find Me",
-            "es": "Apple encuentrame",
-            "pl": "Apple Find Me",
-            "zh-cn": "苹果找到我"
-        },
-        "desc": {
-            "en": "Apple Find Me Connector",
-            "de": "Apple Find Me Connector",
-            "ru": "Соединитель Apple Find Me",
-            "pt": "Conector Apple Find Me",
-            "nl": "Apple Find Me-connector",
-            "fr": "Connecteur Apple Find Me",
-            "it": "Connettore Find Me Apple",
-            "es": "Conector Apple Find Me",
-            "pl": "Złącze Apple Find Me",
-            "zh-cn": "Apple Find Me连接器"
-        },
-        "authors": [
-            "Daniel Lippert <kontakt@daniel-lippert.de>"
-        ],
-        "keywords": [
-            "Apple",
-            "iPhone",
-            "iMac",
-            "iPad",
-            "iCloud",
-            "Location"
-        ],
-        "docs": {
-            "de": "docs/en/README.md",
-            "en": "docs/en/README.md"
-        },
-        "license": "MIT",
-        "platform": "Javascript/Node.js",
-        "main": "main.js",
-        "icon": "find-me.png",
-        "enabled": false,
-        "extIcon": "https://raw.githubusercontent.com/PfisterDaniel/ioBroker.apple-find-me/master/admin/find-me.png",
-        "readme": "https://github.com/PfisterDaniel/ioBroker.apple-find-me/blob/master/README.md",
-        "loglevel": "info",
-        "mode": "daemon",
-        "type": "geoposition",
-        "tier": 2,
-        "connectionType": "cloud",
-        "dataSource": "poll",
-        "compact": true,
-        "materialize": true,
-        "dependencies": [{
-            "js-controller": ">=2.0.0"
-        }]
+  "common": {
+    "name": "apple-find-me",
+    "version": "0.0.7",
+    "news": {
+      "0.0.1": {
+        "en": "initial release",
+        "de": "Erstveröffentlichung",
+        "ru": "Начальная версия",
+        "pt": "lançamento inicial",
+        "nl": "Eerste uitgave",
+        "fr": "Première version",
+        "it": "Versione iniziale",
+        "es": "Versión inicial",
+        "pl": "Pierwsze wydanie",
+        "zh-cn": "首次出版"
+      },
+      "0.0.6": {
+        "en": "Bugfixes",
+        "de": "Fehlerbehebung",
+        "ru": "Исправление ошибок",
+        "pt": "Correções de bugs",
+        "nl": "Bugfixes",
+        "fr": "Corrections de bogues",
+        "it": "Correzioni di bug",
+        "es": "Corrección de errores",
+        "pl": "Poprawki",
+        "zh-cn": "Bug修复"
+      },
+      "0.0.7": {
+        "en": "Bugfixes",
+        "de": "Fehlerbehebung",
+        "ru": "Исправление ошибок",
+        "pt": "Correções de bugs",
+        "nl": "Bugfixes",
+        "fr": "Corrections de bogues",
+        "it": "Correzioni di bug",
+        "es": "Corrección de errores",
+        "pl": "Poprawki",
+        "zh-cn": "Bug修复"
+      }
     },
-    "native": {
-        "username": "email@me.com",
-        "password": "password",
-        "mapprovider": "osm",
-        "apikey": "XXXX-XXXX-XXXX-XXXX",
-        "refresh": "5",
-        "showfmly": true,
-        "timezone": "Europe/Berlin",
-        "timeformat": "YYYY-MM-DD HH:mm:ss",
-        "locations": [{
-            "name": "Home",
-            "latitude": "0.000000",
-            "longitude": "0.00000",
-            "active": false
-        }]
+    "title": "Apple Find Me",
+    "titleLang": {
+      "en": "Apple Find Me",
+      "de": "Apple Find Me",
+      "ru": "Apple Найди меня",
+      "pt": "Apple Find Me",
+      "nl": "Apple vind mij",
+      "fr": "Apple Find Me",
+      "it": "Apple Find Me",
+      "es": "Apple encuentrame",
+      "pl": "Apple Find Me",
+      "zh-cn": "苹果找到我"
     },
-    "objects": [],
-    "instanceObjects": []
+    "desc": {
+      "en": "Apple Find Me Connector",
+      "de": "Apple Find Me Connector",
+      "ru": "Соединитель Apple Find Me",
+      "pt": "Conector Apple Find Me",
+      "nl": "Apple Find Me-connector",
+      "fr": "Connecteur Apple Find Me",
+      "it": "Connettore Find Me Apple",
+      "es": "Conector Apple Find Me",
+      "pl": "Złącze Apple Find Me",
+      "zh-cn": "Apple Find Me连接器"
+    },
+    "authors": [
+      "Daniel Lippert <kontakt@daniel-lippert.de>"
+    ],
+    "keywords": [
+      "Apple",
+      "iPhone",
+      "iMac",
+      "iPad",
+      "iCloud",
+      "Location"
+    ],
+    "docs": {
+      "de": "docs/en/README.md",
+      "en": "docs/en/README.md"
+    },
+    "license": "MIT",
+    "platform": "Javascript/Node.js",
+    "main": "main.js",
+    "icon": "find-me.png",
+    "enabled": false,
+    "extIcon": "https://raw.githubusercontent.com/PfisterDaniel/ioBroker.apple-find-me/master/admin/find-me.png",
+    "readme": "https://github.com/PfisterDaniel/ioBroker.apple-find-me/blob/master/README.md",
+    "loglevel": "info",
+    "mode": "daemon",
+    "type": "geoposition",
+    "tier": 2,
+    "connectionType": "cloud",
+    "dataSource": "poll",
+    "compact": true,
+    "materialize": true,
+    "dependencies": [
+      {
+        "js-controller": ">=3.1.0",
+        "admin": ">=4.0.10"
+      }
+    ],
+    "installedFrom": "PfisterDaniel/ioBroker.apple-find-me#530cd05d94e3c2c4d03696318a63b521967ec8aa"
+  },
+  "native": { 
+    "username": "email@me.com",
+    "password": "password",
+    "mapprovider": "osm",
+    "apikey": "XXXX-XXXX-XXXX-XXXX",
+    "refresh": "5",
+    "showfmly": true,
+    "timezone": "Europe/Berlin",
+    "timeformat": "YYYY-MM-DD HH:mm:ss",
+    "locations": [
+      {
+        "name": "Home",
+        "latitude": "0.000000",
+        "longitude": "0.00000",
+        "active": false
+      }
+    ]
+  },
+  "objects": [],
+  "instanceObjects": [],
+  
+  "encryptedNative": [
+    "username",
+    "password"
+  ]
+
 }

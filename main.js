@@ -19,15 +19,16 @@ var GeoPoint = require('geopoint');
 let adapter;
 
 var ErrorCounter = 0;
+var RefreshTimeout = 5000;
 
-function decrypt(key, value) {
+/*function decrypt(key, value) {
     let result = "";
     for (let i = 0; i < value.length; ++i) {
         result += String.fromCharCode(key[i % key.length].charCodeAt(0) ^ value.charCodeAt(i));
     }
     adapter.log.debug("client_secret decrypt ready");
     return result;
-}
+}*/
 
 
 /**
@@ -48,10 +49,9 @@ function startAdapter(options) {
             try {
                 // Here you must clear all timeouts or intervals that may still be active
                 // clearTimeout(timeout1);
-                // clearTimeout(timeout2);
-                // ...
                 // clearInterval(interval1);
 
+                clearTimeout(RefreshTimeout);
                 callback();
             } catch (e) {
                 callback();
@@ -59,6 +59,7 @@ function startAdapter(options) {
         },
 
         // is called if a subscribed state changes
+        /*
         stateChange: (id, state) => {
             if (state) {
                 // The state was changed
@@ -68,15 +69,20 @@ function startAdapter(options) {
                 adapter.log.info(`state ${id} deleted`);
             }
         },
+        */
     }));
 }
 
 
 function RequestData() {
+
+    const user = adapter.config.username;
+    const pass = adapter.config.password;
+
     var headers = {
         "Accept-Language": "de-DE",
         "User-Agent": "FindMyiPhone/500 CFNetwork/758.4.3 Darwin/15.5.0",
-        "Authorization": "Basic " + Buffer.from(adapter.config.username + ":" + adapter.config.password).toString('base64'),
+        "Authorization": "Basic " + Buffer.from(user + ":" + pass).toString('base64'),
         "X-Apple-Realm-Support": "1.0",
         "X-Apple-AuthScheme": "UserIDGuest",
         "X-Apple-Find-API-Ver": "3.0"
@@ -85,7 +91,7 @@ function RequestData() {
     //var jsonDataObj = {"clientContext": {"appVersion": "7.0", "fmly": ""  + adapter.config.showfmly + ""} };
 
     return new Promise(rtn => {
-        urllib.request('https://fmipmobile.icloud.com/fmipservice/device/' + adapter.config.username + '/initClient', {
+        urllib.request('https://fmipmobile.icloud.com/fmipservice/device/' + user + '/initClient', {
             method: 'POST',
             headers: headers,
             rejectUnauthorized: false,
@@ -130,11 +136,13 @@ function CreateOrUpdateDevices(data) {
                 method: 'GET',
                 rejectUnauthorized: false,
             },
-            function(err, data, res) {
+            async function(err, data, res) {
                 if (!err && res.statusCode == 200) {
                     var DeviceImage = "data:image/png;base64," + Buffer.from(data).toString('base64');
 
-                    adapter.setObjectNotExists(element.deviceClass, {
+
+
+                     await adapter.setObjectNotExists(element.deviceClass, {
                         type: "device",
                         common: {
                             name: 'Apple ' + element.deviceClass + "'s",
@@ -146,7 +154,7 @@ function CreateOrUpdateDevices(data) {
                     });
 
 
-                    adapter.setObjectNotExists(element.deviceClass + "." + element.deviceDiscoveryId, {
+                     await adapter.setObjectNotExists(element.deviceClass + "." + element.deviceDiscoveryId, {
                         type: "device",
                         common: {
                             name: element.name,
@@ -157,7 +165,7 @@ function CreateOrUpdateDevices(data) {
                         native: {},
                     });
 
-                    adapter.setObjectNotExists(element.deviceClass + "." + element.deviceDiscoveryId + ".ModelType", {
+                    await adapter.setObjectNotExists(element.deviceClass + "." + element.deviceDiscoveryId + ".ModelType", {
                         type: "state",
                         common: {
                             role: "text",
@@ -166,14 +174,14 @@ function CreateOrUpdateDevices(data) {
                             read: true,
                             write: false,
                             name: "ModelType",
-                            desc: "Model Typen-Bezeichnung",
+                            desc: "Model Typ-Name",
                         },
                         native: {},
                     });
 
                     adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".ModelType", element.rawDeviceModel, true);
 
-                    adapter.setObjectNotExists(element.deviceClass + "." + element.deviceDiscoveryId + ".ModelName", {
+                    await adapter.setObjectNotExists(element.deviceClass + "." + element.deviceDiscoveryId + ".ModelName", {
                         type: "state",
                         common: {
                             role: "text",
@@ -182,32 +190,32 @@ function CreateOrUpdateDevices(data) {
                             read: true,
                             write: false,
                             name: "ModelName",
-                            desc: "Model Bezeichnung",
+                            desc: "Model Name",
                         },
                         native: {},
                     });
 
                     adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".ModelName", element.deviceDisplayName, true);
 
-                    adapter.setObjectNotExists(element.deviceClass + "." + element.deviceDiscoveryId + ".BatteryLevel", {
+                    await adapter.setObjectNotExists(element.deviceClass + "." + element.deviceDiscoveryId + ".BatteryLevel", {
                         type: "state",
                         common: {
                             name: "BatteryLevel",
-                            role: "level",
+                            role: "value.battery",
                             type: "number",
                             min: 0,
                             max: 100,
                             unit: "%",
                             read: true,
                             write: false,
-                            desc: "Batterie Ladekapazität",
+                            desc: "Battery Charging-Level",
                             def: 0
                         },
                         native: {},
                     });
                     adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".BatteryLevel", parseInt((element.batteryLevel * 100).toString().split('.')[0]), true);
 
-                    adapter.setObjectNotExists(element.deviceClass + "." + element.deviceDiscoveryId + ".BatteryState", {
+                    await adapter.setObjectNotExists(element.deviceClass + "." + element.deviceDiscoveryId + ".BatteryState", {
                         type: "state",
                         common: {
                             name: "BatteryState",
@@ -215,14 +223,14 @@ function CreateOrUpdateDevices(data) {
                             type: "string",
                             read: true,
                             write: false,
-                            desc: "Batterie Status",
+                            desc: "Battery State",
                             def: ""
                         },
                         native: {},
                     });
                     adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".BatteryState", element.batteryStatus, true);
 
-                    adapter.setObjectNotExists(element.deviceClass + "." + element.deviceDiscoveryId + ".ModelImage", {
+                    await adapter.setObjectNotExists(element.deviceClass + "." + element.deviceDiscoveryId + ".ModelImage", {
                         type: "state",
                         common: {
                             name: "ModelImage",
@@ -237,7 +245,7 @@ function CreateOrUpdateDevices(data) {
                     });
                     adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".ModelImage", deviceImageUrl, true);
 
-                    adapter.setObjectNotExists(element.deviceClass + "." + element.deviceDiscoveryId + ".DeviceID", {
+                    await adapter.setObjectNotExists(element.deviceClass + "." + element.deviceDiscoveryId + ".DeviceID", {
                         type: "state",
                         common: {
                             name: "DeviceID",
@@ -245,7 +253,7 @@ function CreateOrUpdateDevices(data) {
                             type: "string",
                             read: true,
                             write: false,
-                            desc: "Geräte Identifikationsnummer",
+                            desc: "Device Identifiere",
                             def: ""
                         },
                         native: {},
@@ -255,67 +263,67 @@ function CreateOrUpdateDevices(data) {
                     //Device has Location Parameters
                     if (element.hasOwnProperty('location') && element.location != undefined && element.location != null) {
 
-                        adapter.setObjectNotExists(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.Latitude", {
+                        await adapter.setObjectNotExists(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.Latitude", {
                             type: "state",
                             common: {
                                 name: "Latitude",
-                                role: "sensor",
+                                role: "value.gps.latitude",
                                 type: "number",
                                 read: true,
                                 write: false,
-                                desc: "Breitengrad",
+                                desc: "Latitude",
                                 def: 0
                             },
                             native: {},
                         });
                         adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.Latitude", element.location.latitude, true);
 
-                        adapter.setObjectNotExists(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.Longitude", {
+                        await adapter.setObjectNotExists(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.Longitude", {
                             type: "state",
                             common: {
                                 name: "Longitude",
-                                role: "sensor",
+                                role: "value.gps.longitude",
                                 type: "number",
                                 read: true,
                                 write: false,
-                                desc: "Längengrad",
+                                desc: "Longitude",
                                 def: 0
                             },
                             native: {},
                         });
                         adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.Longitude", element.location.longitude, true);
 
-                        adapter.setObjectNotExists(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.Position", {
+                        await adapter.setObjectNotExists(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.Position", {
                             type: "state",
                             common: {
                                 name: "Position",
-                                role: "sensor",
+                                role: "value.gps",
                                 type: "string",
                                 read: true,
                                 write: false,
                                 desc: "Position",
-                                def: 0
+                                def: "0, 0"
                             },
                             native: {},
                         });
-                        adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.Position", element.location.latitude + ", " + element.location.longitude, true);
+                        adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.Position", element.location.latitude.toString() + ", " + element.location.longitude.toString(), true);
 
-                        adapter.setObjectNotExists(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.Altitude", {
+                        await adapter.setObjectNotExists(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.Altitude", {
                             type: "state",
                             common: {
                                 name: "Altitude",
-                                role: "sensor",
+                                role: "value.gps.altitude",
                                 type: "number",
                                 read: true,
                                 write: false,
-                                desc: "Höhe",
+                                desc: "Height",
                                 def: 0
                             },
                             native: {},
                         });
                         adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.Altitude", element.location.altitude, true);
 
-                        adapter.setObjectNotExists(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.PositionType", {
+                        await adapter.setObjectNotExists(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.PositionType", {
                             type: "state",
                             common: {
                                 name: "PositionType",
@@ -330,7 +338,7 @@ function CreateOrUpdateDevices(data) {
                         });
                         adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.PositionType", element.location.positionType, true);
 
-                        adapter.setObjectNotExists(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.Accuracy", {
+                        await adapter.setObjectNotExists(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.Accuracy", {
                             type: "state",
                             common: {
                                 name: "Accuracy",
@@ -339,7 +347,7 @@ function CreateOrUpdateDevices(data) {
                                 read: true,
                                 write: false,
                                 min: 0,
-                                desc: "Positionsgenauigkeit",
+                                desc: "Position accuracy",
                                 unit: "m",
                                 def: 0
                             },
@@ -347,7 +355,7 @@ function CreateOrUpdateDevices(data) {
                         });
                         adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.Accuracy", Math.round(element.location.horizontalAccuracy), true);
 
-                        adapter.setObjectNotExists(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.TimeStamp", {
+                        await adapter.setObjectNotExists(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.TimeStamp", {
                             type: "state",
                             common: {
                                 name: "TimeStamp",
@@ -355,7 +363,7 @@ function CreateOrUpdateDevices(data) {
                                 type: "string",
                                 read: true,
                                 write: false,
-                                desc: "TimeStamp der letzten Positionsermittlung",
+                                desc: "TimeStamp of last position search",
                                 def: ""
                             },
                             native: {},
@@ -363,7 +371,7 @@ function CreateOrUpdateDevices(data) {
                         var timeStampString = moment(new Date(element.location.timeStamp)).tz(adapter.config.timezone).format(adapter.config.timeformat);
                         adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.TimeStamp", timeStampString, true);
 
-                        adapter.setObjectNotExists(element.deviceClass + "." + element.deviceDiscoveryId + ".RefreshTimeStamp", {
+                        await adapter.setObjectNotExists(element.deviceClass + "." + element.deviceDiscoveryId + ".RefreshTimeStamp", {
                             type: "state",
                             common: {
                                 name: "RefreshTimeStamp",
@@ -371,7 +379,7 @@ function CreateOrUpdateDevices(data) {
                                 type: "string",
                                 read: true,
                                 write: false,
-                                desc: "TimeStamp der letzten Aktualisierung",
+                                desc: "TimeStamp of last refresh",
                                 def: ""
                             },
                             native: {},
@@ -379,7 +387,7 @@ function CreateOrUpdateDevices(data) {
                         var refreshTimeStampString = moment(new Date()).tz(adapter.config.timezone).format(adapter.config.timeformat);
                         adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".RefreshTimeStamp", refreshTimeStampString, true);
 
-                        adapter.setObjectNotExists(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.CurrentAddress", {
+                        await adapter.setObjectNotExists(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.CurrentAddress", {
                             type: "state",
                             common: {
                                 name: "CurrentAddress",
@@ -387,7 +395,7 @@ function CreateOrUpdateDevices(data) {
                                 type: "string",
                                 read: true,
                                 write: false,
-                                desc: "Aktuelle Addresse",
+                                desc: "Current address",
                                 def: ""
                             },
                             native: {},
@@ -422,7 +430,7 @@ function CreateOrUpdateDevices(data) {
                                                 CurrentAddress += AddressObject.road;
                                                 if (AddressObject.hasOwnProperty('house_number')) {
                                                     CurrentAddress += " " + AddressObject.house_number;
-                                                }
+                                                } 
                                                 CurrentAddress += ", ";
                                             }
                                             if (AddressObject.hasOwnProperty('postcode')) {
@@ -484,7 +492,7 @@ function CreateOrUpdateDevices(data) {
                             });
 
 
-                        adapter.setObjectNotExists(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.CurrentLocation", {
+                        await adapter.setObjectNotExists(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.CurrentLocation", {
                             type: "state",
                             common: {
                                 name: "CurrentLocation",
@@ -492,7 +500,7 @@ function CreateOrUpdateDevices(data) {
                                 type: "string",
                                 read: true,
                                 write: false,
-                                desc: "Aktueller Standort",
+                                desc: "Current Location",
                                 def: "Unknown"
                             },
                             native: {},
@@ -551,18 +559,18 @@ function CreateOrUpdateDevices(data) {
  */
 function onReady() {
     adapter.getForeignObject("system.config", (err, obj) => {
-        try {
+        /*try {
             if (obj && obj.native && obj.native.secret) {
                 //noinspection JSUnresolvedVariable
-                adapter.config.password = decrypt(obj.native.secret, adapter.config.password || "kein Secret vorhanden");
+                adapter.config.password = decrypt(obj.native.secret, adapter.config.password || "No secret exists");
             } else {
                 //noinspection JSUnresolvedVariable
-                adapter.config.password = decrypt("Zgfr56gFe87jJOM", adapter.config.password || "kein Secret vorhanden");
+                adapter.config.password = decrypt("Zgfr56gFe87jJOM", adapter.config.password || "No secret exists");
             }
 
         } catch (err) {
             adapter.log.warn("Error: " + err);
-        }
+        }*/
         main();
     });
 }
@@ -583,12 +591,26 @@ async function main() {
         CreateOrUpdateDevices(Result.response);
     }
 
-    var j = schedule.scheduleJob('*/' + adapter.config.refresh + ' * * * *', async function() {
+    //var j = schedule.scheduleJob('*/' + adapter.config.refresh + ' * * * *', async function() {
+    //    var Result = await RequestData();
+    //    if (Result.statusCode == 200) {
+    //        CreateOrUpdateDevices(Result.response);
+    //    }
+    //});    
+    Refresh();
+}
+
+async function Refresh(){
+    try {
+        adapter.log.info("Refresh Apple-Find-Me Instance: " + adapter.config.username);
         var Result = await RequestData();
         if (Result.statusCode == 200) {
             CreateOrUpdateDevices(Result.response);
         }
-    });
+        RefreshTimeout = setTimeout(Refresh, adapter.config.refresh * 60000);
+    }catch(err){
+        adapter.log.error(err);
+    }
 }
 
 // @ts-ignore parent is a valid property on module

@@ -63,26 +63,6 @@
 -->
     <script type="text/javascript">
         var locations = [];
-
-        var secret;
-
-        function encrypt(key, value) {
-            var result = '';
-            for (var i = 0; i < value.length; ++i) {
-                result += String.fromCharCode(key[i % key.length].charCodeAt(0) ^ value.charCodeAt(i));
-            }
-            return result;
-        }
-
-        function decrypt(key, value) {
-            var result = '';
-            for (var i = 0; i < value.length; ++i) {
-                result += String.fromCharCode(key[i % key.length].charCodeAt(0) ^ value.charCodeAt(i));
-            }
-            return result;
-        }
-
-
         // the function loadSettings has to exist ...
         function loadHelper(settings, onChange) {
             // example: select elements with id=key and class=value and insert value
@@ -91,9 +71,9 @@
             $('.value').each(function() {
                 var $key = $(this);
                 var id = $key.attr('id');
-                if (id === 'password') {
+                /*if (id === 'password') {
                     settings[id] = decrypt(secret, settings[id]);
-                }
+                }*/
                 /*if(id === 'map_provider'){
                     showMessage(_($key.val()));
                 }*/
@@ -189,7 +169,6 @@
         // This will be called by the admin adapter when the settings page loads
         function load(settings, onChange) {
             socket.emit('getObject', 'system.config', function(err, obj) {
-                secret = (obj.native ? obj.native.secret : '') || 'Zgfr56gFe87jJOM';
                 loadHelper(settings, onChange);
             });
             onChange(false);
@@ -207,9 +186,9 @@
                     obj[id] = $this.prop('checked');
                 } else {
                     var value = $this.val();
-                    if (id === 'password') {
+                    /*if (id === 'password') {
                         value = encrypt(secret, value);
-                    }
+                    }*/
                     console.log(id + " -> " + value);
                     obj[id] = value;
                 }
