@@ -1,10 +1,10 @@
 ![Logo](https://raw.githubusercontent.com/PfisterDaniel/ioBroker.apple-find-me/master/admin/find-me.png)
 # ioBroker.apple-find-me
 
-[![NPM version](http://img.shields.io/npm/v/ioBroker.apple-find-me.svg)](https://www.npmjs.com/package/iobroker.apple-find-me)
-[![Downloads](https://img.shields.io/npm/dm/ioBroker.apple-find-me.svg)](https://www.npmjs.com/package/iobroker.apple-find-me)
+[![NPM version](http://img.shields.io/npm/v/iobroker.apple-find-me.svg)](https://www.npmjs.com/package/iobroker.apple-find-me)
+[![Downloads](https://img.shields.io/npm/dm/iobroker.apple-find-me.svg)](https://www.npmjs.com/package/iobroker.apple-find-me)
 
-[![NPM](https://nodei.co/npm/ioBroker.apple-find-me.png?downloads=true)](https://nodei.co/npm/iobroker.apple-find-me/)
+[![NPM](https://nodei.co/npm/iobroker.apple-find-me.png?downloads=true)](https://nodei.co/npm/iobroker.apple-find-me/)
 
 ## Apple-find-me Adapter for ioBroker
 
