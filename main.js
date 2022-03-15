@@ -62,7 +62,7 @@ function RequestData() {
         "X-Apple-Realm-Support": "1.0",
         "X-Apple-AuthScheme": "UserIDGuest",
         "X-Apple-Find-API-Ver": "3.0"
-    };
+    }; 
     //adapter.log.info(JSON.stringify(headers));
     //var jsonDataObj = {"clientContext": {"appVersion": "7.0", "fmly": ""  + adapter.config.showfmly + ""} };
 
@@ -594,7 +594,7 @@ async function main() {
 
 async function Refresh(){
     try {
-        adapter.log.info("Refresh Apple-Find-Me Instance: " + adapter.config.username);
+        //adapter.log.info("Refresh Apple-Find-Me Instance: " + adapter.config.username);
         var Result = await RequestData();
         if (Result.statusCode == 200) {
             CreateOrUpdateDevices(Result.response);
