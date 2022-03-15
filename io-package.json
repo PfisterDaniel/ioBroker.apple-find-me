@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "apple-find-me",
-    "version": "0.0.10",
+    "version": "0.0.11",
     "news": {
       "0.0.1": {
         "en": "initial release",
@@ -74,8 +74,19 @@
         "es": "Agregar flujo de trabajo de GitHub",
         "pl": "Dodaj przepływ pracy GitHub",
         "zh-cn": "添加 GitHub 工作流"
+      },
+      "0.0.11":{
+        "en": "Fix issues for publish from feedback (Apollon7)",
+        "de": "Probleme beim Veröffentlichen von Feedback beheben (Apollon7)",
+        "ru": "Исправление проблем с публикацией из отзывов (Apollon7)",
+        "pt": "Corrigir problemas para publicar a partir de comentários (Apollon7)",
+        "nl": "Problemen met publiceren vanuit feedback oplossen (Apollon7)",
+        "fr": "Résoudre les problèmes de publication à partir des commentaires (Apollon7)",
+        "it": "Risolti i problemi per la pubblicazione dal feedback (Apollon7)",
+        "es": "Solucionar problemas para publicar a partir de comentarios (Apollon7)",
+        "pl": "Napraw problemy z publikacją na podstawie opinii (Apollon7)",
+        "zh-cn": "修复反馈发布的问题 (Apollon7)"
       }
-
     },
     "title": "Apple Find Me",
     "titleLang": {
