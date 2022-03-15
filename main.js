@@ -8,9 +8,8 @@
 // you need to create an adapter
 const utils = require("@iobroker/adapter-core");
 var urllib = require("urllib");
-var schedule = require('node-schedule');
 var moment = require('moment-timezone');
-var GeoPoint = require('geopoint');
+var GeoPoint = require('geopoint'); 
 
 /**
  * The adapter instance
@@ -111,9 +110,21 @@ function CreateOrUpdateDevices(data) {
         if (!element.deviceColor && element.deviceColor != "" && element.deviceColor != undefined) {
             DevColor = "-" + element.deviceColor;
         }
-        
-        if (element.deviceDiscoveryId != undefined && element.deviceDiscoveryId != null && element.deviceDiscoveryId != ""){
-       
+
+        let DeviceNameWithID = element.name.replace(/[^a-zA-Z0-9]/g, "").toUpperCase() + element.id.replace(/[^a-zA-Z0-9]/g, "").toUpperCase();
+
+
+      
+        let DiscoveryID = "";
+
+        if (element.deviceDiscoveryId != undefined && element.deviceDiscoveryId != null && element.deviceDiscoveryId != ""){ 
+            DiscoveryID = element.deviceDiscoveryId; 
+        }else{
+            //Build Dummy DiscoveryID Issue #6
+            DiscoveryID = "0E112CBF-D1B1-0001-B12E-" + DeviceNameWithID.substring(0, 12);
+        }
+  
+        if (DiscoveryID != ""){      
             var deviceImageUrl = 'https://statici.icloud.com/fmipmobile/deviceImages-9.0/' + element.deviceClass + '/' + element.rawDeviceModel + DevColor + '/online-infobox.png';
             //adapter.log.info(JSON.stringify(element));
             urllib.request(deviceImageUrl, {
@@ -136,7 +147,7 @@ function CreateOrUpdateDevices(data) {
                         });
 
 
-                        await adapter.setObjectNotExistsAsync(element.deviceClass + "." + element.deviceDiscoveryId, {
+                        await adapter.setObjectNotExistsAsync(element.deviceClass + "." + DiscoveryID, {
                             type: "device",
                             common: {
                                 name: element.name,
@@ -147,7 +158,7 @@ function CreateOrUpdateDevices(data) {
                             native: {},
                         });
 
-                        await adapter.setObjectNotExistsAsync(element.deviceClass + "." + element.deviceDiscoveryId + ".ModelType", {
+                        await adapter.setObjectNotExistsAsync(element.deviceClass + "." + DiscoveryID + ".ModelType", {
                             type: "state",
                             common: {
                                 role: "text",
@@ -161,9 +172,9 @@ function CreateOrUpdateDevices(data) {
                             native: {},
                         });
 
-                        adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".ModelType", element.rawDeviceModel, true);
+                        adapter.setState(element.deviceClass + "." + DiscoveryID + ".ModelType", element.rawDeviceModel, true);
 
-                        await adapter.setObjectNotExistsAsync(element.deviceClass + "." + element.deviceDiscoveryId + ".ModelName", {
+                        await adapter.setObjectNotExistsAsync(element.deviceClass + "." + DiscoveryID + ".ModelName", {
                             type: "state",
                             common: {
                                 role: "text",
@@ -177,9 +188,9 @@ function CreateOrUpdateDevices(data) {
                             native: {},
                         });
 
-                        adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".ModelName", element.deviceDisplayName, true);
+                        adapter.setState(element.deviceClass + "." + DiscoveryID + ".ModelName", element.deviceDisplayName, true);
 
-                        await adapter.setObjectNotExistsAsync(element.deviceClass + "." + element.deviceDiscoveryId + ".BatteryLevel", {
+                        await adapter.setObjectNotExistsAsync(element.deviceClass + "." + DiscoveryID + ".BatteryLevel", {
                             type: "state",
                             common: {
                                 name: "BatteryLevel",
@@ -195,9 +206,9 @@ function CreateOrUpdateDevices(data) {
                             },
                             native: {},
                         });
-                        adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".BatteryLevel", parseInt((element.batteryLevel * 100).toString().split('.')[0]), true);
+                        adapter.setState(element.deviceClass + "." + DiscoveryID + ".BatteryLevel", parseInt((element.batteryLevel * 100).toString().split('.')[0]), true);
 
-                        await adapter.setObjectNotExistsAsync(element.deviceClass + "." + element.deviceDiscoveryId + ".BatteryState", {
+                        await adapter.setObjectNotExistsAsync(element.deviceClass + "." + DiscoveryID + ".BatteryState", {
                             type: "state",
                             common: {
                                 name: "BatteryState",
@@ -210,9 +221,9 @@ function CreateOrUpdateDevices(data) {
                             },
                             native: {},
                         });
-                        adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".BatteryState", element.batteryStatus, true);
+                        adapter.setState(element.deviceClass + "." + DiscoveryID + ".BatteryState", element.batteryStatus, true);
 
-                        await adapter.setObjectNotExistsAsync(element.deviceClass + "." + element.deviceDiscoveryId + ".ModelImage", {
+                        await adapter.setObjectNotExistsAsync(element.deviceClass + "." + DiscoveryID + ".ModelImage", {
                             type: "state",
                             common: {
                                 name: "ModelImage",
@@ -225,9 +236,9 @@ function CreateOrUpdateDevices(data) {
                             },
                             native: {},
                         });
-                        adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".ModelImage", deviceImageUrl, true);
+                        adapter.setState(element.deviceClass + "." + DiscoveryID + ".ModelImage", deviceImageUrl, true);
 
-                        await adapter.setObjectNotExistsAsync(element.deviceClass + "." + element.deviceDiscoveryId + ".DeviceID", {
+                        await adapter.setObjectNotExistsAsync(element.deviceClass + "." + DiscoveryID + ".DeviceID", {
                             type: "state",
                             common: {
                                 name: "DeviceID",
@@ -240,12 +251,12 @@ function CreateOrUpdateDevices(data) {
                             },
                             native: {},
                         });
-                        adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".DeviceID", element.id, true);
+                        adapter.setState(element.deviceClass + "." + DiscoveryID + ".DeviceID", element.id, true);
 
                         //Device has Location Parameters
                         if (element.hasOwnProperty('location') && element.location != undefined && element.location != null) {
 
-                            await adapter.setObjectNotExistsAsync(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.Latitude", {
+                            await adapter.setObjectNotExistsAsync(element.deviceClass + "." + DiscoveryID + ".Location.Latitude", {
                                 type: "state",
                                 common: {
                                     name: "Latitude",
@@ -258,9 +269,9 @@ function CreateOrUpdateDevices(data) {
                                 },
                                 native: {},
                             });
-                            adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.Latitude", element.location.latitude, true);
+                            adapter.setState(element.deviceClass + "." + DiscoveryID + ".Location.Latitude", element.location.latitude, true);
 
-                            await adapter.setObjectNotExistsAsync(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.Longitude", {
+                            await adapter.setObjectNotExistsAsync(element.deviceClass + "." + DiscoveryID + ".Location.Longitude", {
                                 type: "state",
                                 common: {
                                     name: "Longitude",
@@ -273,9 +284,9 @@ function CreateOrUpdateDevices(data) {
                                 },
                                 native: {},
                             });
-                            adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.Longitude", element.location.longitude, true);
+                            adapter.setState(element.deviceClass + "." + DiscoveryID + ".Location.Longitude", element.location.longitude, true);
 
-                            await adapter.setObjectNotExistsAsync(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.Position", {
+                            await adapter.setObjectNotExistsAsync(element.deviceClass + "." + DiscoveryID + ".Location.Position", {
                                 type: "state",
                                 common: {
                                     name: "Position",
@@ -288,9 +299,9 @@ function CreateOrUpdateDevices(data) {
                                 },
                                 native: {},
                             });
-                            adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.Position", element.location.latitude.toString() + ", " + element.location.longitude.toString(), true);
+                            adapter.setState(element.deviceClass + "." + DiscoveryID + ".Location.Position", element.location.latitude.toString() + ", " + element.location.longitude.toString(), true);
 
-                            await adapter.setObjectNotExistsAsync(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.Altitude", {
+                            await adapter.setObjectNotExistsAsync(element.deviceClass + "." + DiscoveryID + ".Location.Altitude", {
                                 type: "state",
                                 common: {
                                     name: "Altitude",
@@ -303,9 +314,9 @@ function CreateOrUpdateDevices(data) {
                                 },
                                 native: {},
                             });
-                            adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.Altitude", element.location.altitude, true);
+                            adapter.setState(element.deviceClass + "." + DiscoveryID + ".Location.Altitude", element.location.altitude, true);
 
-                            await adapter.setObjectNotExistsAsync(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.PositionType", {
+                            await adapter.setObjectNotExistsAsync(element.deviceClass + "." + DiscoveryID + ".Location.PositionType", {
                                 type: "state",
                                 common: {
                                     name: "PositionType",
@@ -318,9 +329,9 @@ function CreateOrUpdateDevices(data) {
                                 },
                                 native: {},
                             });
-                            adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.PositionType", element.location.positionType, true);
+                            adapter.setState(element.deviceClass + "." + DiscoveryID + ".Location.PositionType", element.location.positionType, true);
 
-                            await adapter.setObjectNotExistsAsync(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.Accuracy", {
+                            await adapter.setObjectNotExistsAsync(element.deviceClass + "." + DiscoveryID + ".Location.Accuracy", {
                                 type: "state",
                                 common: {
                                     name: "Accuracy",
@@ -335,9 +346,9 @@ function CreateOrUpdateDevices(data) {
                                 },
                                 native: {},
                             });
-                            adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.Accuracy", Math.round(element.location.horizontalAccuracy), true);
+                            adapter.setState(element.deviceClass + "." + DiscoveryID + ".Location.Accuracy", Math.round(element.location.horizontalAccuracy), true);
 
-                            await adapter.setObjectNotExistsAsync(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.TimeStamp", {
+                            await adapter.setObjectNotExistsAsync(element.deviceClass + "." + DiscoveryID + ".Location.TimeStamp", {
                                 type: "state",
                                 common: {
                                     name: "TimeStamp",
@@ -351,9 +362,9 @@ function CreateOrUpdateDevices(data) {
                                 native: {},
                             });
                             var timeStampString = moment(new Date(element.location.timeStamp)).tz(adapter.config.timezone).format(adapter.config.timeformat);
-                            adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.TimeStamp", timeStampString, true);
+                            adapter.setState(element.deviceClass + "." + DiscoveryID + ".Location.TimeStamp", timeStampString, true);
 
-                            await adapter.setObjectNotExistsAsync(element.deviceClass + "." + element.deviceDiscoveryId + ".RefreshTimeStamp", {
+                            await adapter.setObjectNotExistsAsync(element.deviceClass + "." + DiscoveryID + ".RefreshTimeStamp", {
                                 type: "state",
                                 common: {
                                     name: "RefreshTimeStamp",
@@ -367,9 +378,9 @@ function CreateOrUpdateDevices(data) {
                                 native: {},
                             });
                             var refreshTimeStampString = moment(new Date()).tz(adapter.config.timezone).format(adapter.config.timeformat);
-                            adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".RefreshTimeStamp", refreshTimeStampString, true);
+                            adapter.setState(element.deviceClass + "." + DiscoveryID + ".RefreshTimeStamp", refreshTimeStampString, true);
 
-                            await adapter.setObjectNotExistsAsync(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.CurrentAddress", {
+                            await adapter.setObjectNotExistsAsync(element.deviceClass + "." + DiscoveryID + ".Location.CurrentAddress", {
                                 type: "state",
                                 common: {
                                     name: "CurrentAddress",
@@ -428,53 +439,53 @@ function CreateOrUpdateDevices(data) {
                                             } else {
                                                 CurrentAddress = "Response has no Address Object";
                                             }
-                                            adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.CurrentAddress", CurrentAddress, true);
+                                            adapter.setState(element.deviceClass + "." + DiscoveryID + ".Location.CurrentAddress", CurrentAddress, true);
                                         } else {
                                             adapter.log.error("Error on getting address from OpenStreetMaps");
-                                            adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.CurrentAddress", "< ErrorCode " + res.statusCode + " >", true);
+                                            adapter.setState(element.deviceClass + "." + DiscoveryID + ".Location.CurrentAddress", "< ErrorCode " + res.statusCode + " >", true);
                                         }
                                     } else if (adapter.config.mapprovider === 'bing') {
                                         if (!err && res.statusCode == 200) {
                                             var CurrentAddress = data.resourceSets[0].resources[0].address.formattedAddress;
-                                            adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.CurrentAddress", CurrentAddress, true);
+                                            adapter.setState(element.deviceClass + "." + DiscoveryID + ".Location.CurrentAddress", CurrentAddress, true);
                                         } else {
                                             if (res.statusCode == 401) {
                                                 adapter.log.error("API-Key not valid. Please Validate your API-KEY!");
-                                                adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.CurrentAddress", "< No valid API-KEY >", true);
+                                                adapter.setState(element.deviceClass + "." + DiscoveryID + ".Location.CurrentAddress", "< No valid API-KEY >", true);
                                             }
                                         }
                                     } else if (adapter.config.mapprovider === 'here') {
                                         if (!err && res.statusCode == 200) {
                                             try {
                                                 var CurrentAddress = data.items[0].address.label;
-                                                adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.CurrentAddress", CurrentAddress, true);
+                                                adapter.setState(element.deviceClass + "." + DiscoveryID + ".Location.CurrentAddress", CurrentAddress, true);
                                             } catch (e) {
                                                 adapter.log.error("Error on getting address from Here-Maps: " + e);
-                                                adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.CurrentAddress", "< Error " + e + " >", true);
+                                                adapter.setState(element.deviceClass + "." + DiscoveryID + ".Location.CurrentAddress", "< Error " + e + " >", true);
                                             }
                                         } else {
                                             adapter.log.error("Error on getting address from Here-Maps");
-                                            adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.CurrentAddress", "< ErrorCode " + res.statusCode + " >", true);
+                                            adapter.setState(element.deviceClass + "." + DiscoveryID + ".Location.CurrentAddress", "< ErrorCode " + res.statusCode + " >", true);
                                         }
                                     } else if (adapter.config.mapprovider === 'google') {
                                         if (!err && res.statusCode == 200) {
                                             if (data.status == "OK") {
                                                 var CurrentAddress = data.results[0].formatted_address;
-                                                adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.CurrentAddress", CurrentAddress, true);
+                                                adapter.setState(element.deviceClass + "." + DiscoveryID + ".Location.CurrentAddress", CurrentAddress, true);
                                             } else {
                                                 adapter.log.error("Error on getting address from Google-Maps");
-                                                adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.CurrentAddress", "< Error: " + data.status + " >", true);
+                                                adapter.setState(element.deviceClass + "." + DiscoveryID + ".Location.CurrentAddress", "< Error: " + data.status + " >", true);
                                             }
 
                                         } else {
                                             adapter.log.error("Error on getting address from Google-Maps");
-                                            adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.CurrentAddress", "< ErrorCode " + res.statusCode + " >", true);
+                                            adapter.setState(element.deviceClass + "." + DiscoveryID + ".Location.CurrentAddress", "< ErrorCode " + res.statusCode + " >", true);
                                         }
                                     }
                                 });
 
 
-                            await adapter.setObjectNotExistsAsync(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.CurrentLocation", {
+                            await adapter.setObjectNotExistsAsync(element.deviceClass + "." + DiscoveryID + ".Location.CurrentLocation", {
                                 type: "state",
                                 common: {
                                     name: "CurrentLocation",
@@ -518,19 +529,16 @@ function CreateOrUpdateDevices(data) {
                                     loc
                                 )
                                 if (smallestDistanceValue.distance < 150) {
-                                    adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.CurrentLocation", smallestDistanceValue.name, true);
+                                    adapter.setState(element.deviceClass + "." + DiscoveryID + ".Location.CurrentLocation", smallestDistanceValue.name, true);
                                 } else {
-                                    adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.CurrentLocation", "Unknown", true);
+                                    adapter.setState(element.deviceClass + "." + DiscoveryID + ".Location.CurrentLocation", "Unknown", true);
                                 }
                             } else {
-                                adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.CurrentLocation", "< No Places Defined >", true);
+                                adapter.setState(element.deviceClass + "." + DiscoveryID + ".Location.CurrentLocation", "< No Places Defined >", true);
                             }
                         }
                     }
                 });
-        }else{
-            
-            adapter.log.warn("DeviceDiscoveryId was empty from element: " + JSON.stringify(element));
         }
     });
 }
