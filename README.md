@@ -1,5 +1,5 @@
 ![Logo](https://raw.githubusercontent.com/PfisterDaniel/iobroker.apple-find-me/master/admin/find-me.png)
-# iobroker.apple-find-me
+# ioBroker.apple-find-me
 
 [![NPM version](http://img.shields.io/npm/v/iobroker.apple-find-me.svg)](https://www.npmjs.com/package/iobroker.apple-find-me)
 [![Downloads](https://img.shields.io/npm/dm/iobroker.apple-find-me.svg)](https://www.npmjs.com/package/iobroker.apple-find-me)
