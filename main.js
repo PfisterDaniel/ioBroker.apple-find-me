@@ -112,9 +112,6 @@ function CreateOrUpdateDevices(data) {
         }
 
         let DeviceNameWithID = element.name.replace(/[^a-zA-Z0-9]/g, "").toUpperCase() + element.id.replace(/[^a-zA-Z0-9]/g, "").toUpperCase();
-
-
-      
         let DiscoveryID = "";
 
         if (element.deviceDiscoveryId != undefined && element.deviceDiscoveryId != null && element.deviceDiscoveryId != ""){ 

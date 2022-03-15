@@ -31,6 +31,9 @@ Used Library [MomentJs](https://momentjs.com/timezone)
 
 ## Changelog
 
+### 0.0.12
+* Fix Issue #6
+
 ### 0.0.11
 * Fix Issues for publish from feedback Apollon77
 
