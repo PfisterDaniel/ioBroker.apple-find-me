@@ -124,7 +124,7 @@ function CreateOrUpdateDevices(data) {
                     if (!err && res.statusCode == 200) {
                         var DeviceImage = "data:image/png;base64," + Buffer.from(data).toString('base64');
 
-                        await adapter.setObjectNotExists(element.deviceClass, {
+                        await adapter.setObjectNotExistsAsync(element.deviceClass, {
                             type: "device",
                             common: {
                                 name: 'Apple ' + element.deviceClass + "'s",
@@ -136,7 +136,7 @@ function CreateOrUpdateDevices(data) {
                         });
 
 
-                        await adapter.setObjectNotExists(element.deviceClass + "." + element.deviceDiscoveryId, {
+                        await adapter.setObjectNotExistsAsync(element.deviceClass + "." + element.deviceDiscoveryId, {
                             type: "device",
                             common: {
                                 name: element.name,
@@ -147,7 +147,7 @@ function CreateOrUpdateDevices(data) {
                             native: {},
                         });
 
-                        await adapter.setObjectNotExists(element.deviceClass + "." + element.deviceDiscoveryId + ".ModelType", {
+                        await adapter.setObjectNotExistsAsync(element.deviceClass + "." + element.deviceDiscoveryId + ".ModelType", {
                             type: "state",
                             common: {
                                 role: "text",
@@ -163,7 +163,7 @@ function CreateOrUpdateDevices(data) {
 
                         adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".ModelType", element.rawDeviceModel, true);
 
-                        await adapter.setObjectNotExists(element.deviceClass + "." + element.deviceDiscoveryId + ".ModelName", {
+                        await adapter.setObjectNotExistsAsync(element.deviceClass + "." + element.deviceDiscoveryId + ".ModelName", {
                             type: "state",
                             common: {
                                 role: "text",
@@ -179,7 +179,7 @@ function CreateOrUpdateDevices(data) {
 
                         adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".ModelName", element.deviceDisplayName, true);
 
-                        await adapter.setObjectNotExists(element.deviceClass + "." + element.deviceDiscoveryId + ".BatteryLevel", {
+                        await adapter.setObjectNotExistsAsync(element.deviceClass + "." + element.deviceDiscoveryId + ".BatteryLevel", {
                             type: "state",
                             common: {
                                 name: "BatteryLevel",
@@ -197,7 +197,7 @@ function CreateOrUpdateDevices(data) {
                         });
                         adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".BatteryLevel", parseInt((element.batteryLevel * 100).toString().split('.')[0]), true);
 
-                        await adapter.setObjectNotExists(element.deviceClass + "." + element.deviceDiscoveryId + ".BatteryState", {
+                        await adapter.setObjectNotExistsAsync(element.deviceClass + "." + element.deviceDiscoveryId + ".BatteryState", {
                             type: "state",
                             common: {
                                 name: "BatteryState",
@@ -212,7 +212,7 @@ function CreateOrUpdateDevices(data) {
                         });
                         adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".BatteryState", element.batteryStatus, true);
 
-                        await adapter.setObjectNotExists(element.deviceClass + "." + element.deviceDiscoveryId + ".ModelImage", {
+                        await adapter.setObjectNotExistsAsync(element.deviceClass + "." + element.deviceDiscoveryId + ".ModelImage", {
                             type: "state",
                             common: {
                                 name: "ModelImage",
@@ -227,7 +227,7 @@ function CreateOrUpdateDevices(data) {
                         });
                         adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".ModelImage", deviceImageUrl, true);
 
-                        await adapter.setObjectNotExists(element.deviceClass + "." + element.deviceDiscoveryId + ".DeviceID", {
+                        await adapter.setObjectNotExistsAsync(element.deviceClass + "." + element.deviceDiscoveryId + ".DeviceID", {
                             type: "state",
                             common: {
                                 name: "DeviceID",
@@ -245,7 +245,7 @@ function CreateOrUpdateDevices(data) {
                         //Device has Location Parameters
                         if (element.hasOwnProperty('location') && element.location != undefined && element.location != null) {
 
-                            await adapter.setObjectNotExists(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.Latitude", {
+                            await adapter.setObjectNotExistsAsync(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.Latitude", {
                                 type: "state",
                                 common: {
                                     name: "Latitude",
@@ -260,7 +260,7 @@ function CreateOrUpdateDevices(data) {
                             });
                             adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.Latitude", element.location.latitude, true);
 
-                            await adapter.setObjectNotExists(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.Longitude", {
+                            await adapter.setObjectNotExistsAsync(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.Longitude", {
                                 type: "state",
                                 common: {
                                     name: "Longitude",
@@ -275,7 +275,7 @@ function CreateOrUpdateDevices(data) {
                             });
                             adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.Longitude", element.location.longitude, true);
 
-                            await adapter.setObjectNotExists(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.Position", {
+                            await adapter.setObjectNotExistsAsync(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.Position", {
                                 type: "state",
                                 common: {
                                     name: "Position",
@@ -290,7 +290,7 @@ function CreateOrUpdateDevices(data) {
                             });
                             adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.Position", element.location.latitude.toString() + ", " + element.location.longitude.toString(), true);
 
-                            await adapter.setObjectNotExists(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.Altitude", {
+                            await adapter.setObjectNotExistsAsync(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.Altitude", {
                                 type: "state",
                                 common: {
                                     name: "Altitude",
@@ -305,7 +305,7 @@ function CreateOrUpdateDevices(data) {
                             });
                             adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.Altitude", element.location.altitude, true);
 
-                            await adapter.setObjectNotExists(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.PositionType", {
+                            await adapter.setObjectNotExistsAsync(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.PositionType", {
                                 type: "state",
                                 common: {
                                     name: "PositionType",
@@ -320,7 +320,7 @@ function CreateOrUpdateDevices(data) {
                             });
                             adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.PositionType", element.location.positionType, true);
 
-                            await adapter.setObjectNotExists(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.Accuracy", {
+                            await adapter.setObjectNotExistsAsync(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.Accuracy", {
                                 type: "state",
                                 common: {
                                     name: "Accuracy",
@@ -337,7 +337,7 @@ function CreateOrUpdateDevices(data) {
                             });
                             adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.Accuracy", Math.round(element.location.horizontalAccuracy), true);
 
-                            await adapter.setObjectNotExists(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.TimeStamp", {
+                            await adapter.setObjectNotExistsAsync(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.TimeStamp", {
                                 type: "state",
                                 common: {
                                     name: "TimeStamp",
@@ -353,7 +353,7 @@ function CreateOrUpdateDevices(data) {
                             var timeStampString = moment(new Date(element.location.timeStamp)).tz(adapter.config.timezone).format(adapter.config.timeformat);
                             adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.TimeStamp", timeStampString, true);
 
-                            await adapter.setObjectNotExists(element.deviceClass + "." + element.deviceDiscoveryId + ".RefreshTimeStamp", {
+                            await adapter.setObjectNotExistsAsync(element.deviceClass + "." + element.deviceDiscoveryId + ".RefreshTimeStamp", {
                                 type: "state",
                                 common: {
                                     name: "RefreshTimeStamp",
@@ -369,7 +369,7 @@ function CreateOrUpdateDevices(data) {
                             var refreshTimeStampString = moment(new Date()).tz(adapter.config.timezone).format(adapter.config.timeformat);
                             adapter.setState(element.deviceClass + "." + element.deviceDiscoveryId + ".RefreshTimeStamp", refreshTimeStampString, true);
 
-                            await adapter.setObjectNotExists(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.CurrentAddress", {
+                            await adapter.setObjectNotExistsAsync(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.CurrentAddress", {
                                 type: "state",
                                 common: {
                                     name: "CurrentAddress",
@@ -474,7 +474,7 @@ function CreateOrUpdateDevices(data) {
                                 });
 
 
-                            await adapter.setObjectNotExists(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.CurrentLocation", {
+                            await adapter.setObjectNotExistsAsync(element.deviceClass + "." + element.deviceDiscoveryId + ".Location.CurrentLocation", {
                                 type: "state",
                                 common: {
                                     name: "CurrentLocation",
@@ -591,6 +591,8 @@ async function Refresh(){
         RefreshTimeout = setTimeout(Refresh, adapter.config.refresh * 60000);
     }catch(err){
         adapter.log.error(err);
+        //Reset the Timeout else Adapter gets "stuck"
+        RefreshTimeout = setTimeout(Refresh, adapter.config.refresh * 60000);
     }
 }
 

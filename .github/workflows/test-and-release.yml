@@ -37,6 +37,9 @@ jobs:
 
       - name: Install Dependencies
         run: npm install
+            
+      - name: Test package files
+        run: npm run test:package
 
   # Runs adapter tests on all supported node versions and OSes
   adapter-tests:
@@ -59,6 +62,17 @@ jobs:
 
       - name: Install Dependencies
         run: npm install
+
+      - name: Run unit tests
+        run: npm run test:unit
+
+      - name: Run integration tests (unix only)
+        if: startsWith(runner.OS, 'windows') == false
+        run: DEBUG=testing:* npm run test:integration
+
+      - name: Run integration tests (windows only)
+        if: startsWith(runner.OS, 'windows')
+        run: set DEBUG=testing:* & npm run test:integration
 
   # Deploys the final package to NPM
   deploy:

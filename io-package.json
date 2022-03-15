@@ -134,10 +134,12 @@
     "materialize": true,
     "dependencies": [
       {
-        "js-controller": ">=3.1.0",
-        "admin": ">=4.0.10"
+        "js-controller": ">=3.1.0"       
       }
     ],
+    "globalDependencies": [{
+        "admin": ">=4.0.10"
+    }],
     "installedFrom": "PfisterDaniel/ioBroker.apple-find-me#530cd05d94e3c2c4d03696318a63b521967ec8aa"
   },
   "native": { 
@@ -162,6 +164,11 @@
   "instanceObjects": [],
   
   "encryptedNative": [
+    "username",
+    "password"
+  ],
+
+  "protectedNative": [
     "username",
     "password"
   ]
