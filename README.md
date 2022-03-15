@@ -1,10 +1,10 @@
-![Logo](https://raw.githubusercontent.com/PfisterDaniel/iobroker.apple-find-me/master/admin/find-me.png)
+![Logo](https://raw.githubusercontent.com/PfisterDaniel/ioBroker.apple-find-me/master/admin/find-me.png)
 # ioBroker.apple-find-me
 
-[![NPM version](http://img.shields.io/npm/v/iobroker.apple-find-me.svg)](https://www.npmjs.com/package/iobroker.apple-find-me)
-[![Downloads](https://img.shields.io/npm/dm/iobroker.apple-find-me.svg)](https://www.npmjs.com/package/iobroker.apple-find-me)
+[![NPM version](http://img.shields.io/npm/v/ioBroker.apple-find-me.svg)](https://www.npmjs.com/package/iobroker.apple-find-me)
+[![Downloads](https://img.shields.io/npm/dm/ioBroker.apple-find-me.svg)](https://www.npmjs.com/package/iobroker.apple-find-me)
 
-[![NPM](https://nodei.co/npm/iobroker.apple-find-me.png?downloads=true)](https://nodei.co/npm/iobroker.apple-find-me/)
+[![NPM](https://nodei.co/npm/ioBroker.apple-find-me.png?downloads=true)](https://nodei.co/npm/iobroker.apple-find-me/)
 
 ## Apple-find-me Adapter for ioBroker
 
@@ -13,7 +13,7 @@ Apple Find Me Connector is a ioBroker-Adapter to get the current locations and o
 It work's without 2-Factor-Authentication (2FA) and retrive all connected devices.
 
 ## Configuration
-![ConfigImage](https://raw.githubusercontent.com/PfisterDaniel/iobroker.apple-find-me/master/images/config.png)
+![ConfigImage](https://raw.githubusercontent.com/PfisterDaniel/ioBroker.apple-find-me/master/images/config.png)
 
 ### Available Timezones
 Used Library [MomentJs](https://momentjs.com/timezone)
@@ -25,7 +25,7 @@ Used Library [MomentJs](https://momentjs.com/timezone)
 
 
 ## Example Objects
-![Example](https://raw.githubusercontent.com/PfisterDaniel/iobroker.apple-find-me/master/images/example_output.png)
+![Example](https://raw.githubusercontent.com/PfisterDaniel/ioBroker.apple-find-me/master/images/example_output.png)
 
 
 
@@ -67,7 +67,7 @@ Used Library [MomentJs](https://momentjs.com/timezone)
 
 
 ## Bugs and feature requests
-Please create an issue in [GitHub](https://github.com/PfisterDaniel/iobroker.apple-find-me/issues)
+Please create an issue in [GitHub](https://github.com/PfisterDaniel/ioBroker.apple-find-me/issues)
 
 
 ## License
