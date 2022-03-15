@@ -528,7 +528,10 @@ function CreateOrUpdateDevices(data) {
                         }
                     }
                 });
-        } 
+        }else{
+            
+            adapter.log.warn("DeviceDiscoveryId was empty from element: " + JSON.stringify(element));
+        }
     });
 }
 
