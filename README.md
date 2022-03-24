@@ -1,9 +1,9 @@
 ![Logo](https://raw.githubusercontent.com/PfisterDaniel/ioBroker.apple-find-me/master/admin/find-me.png)
 # ioBroker.apple-find-me
 
-![GitHub Workflow Status](https://img.shields.io/github/workflow/status/PfisterDaniel/ioBroker.apple-find-me/Test%20and%20Release)
-[![NPM version](http://img.shields.io/npm/v/iobroker.apple-find-me.svg)](https://www.npmjs.com/package/iobroker.apple-find-me)
-[![Downloads](https://img.shields.io/npm/dm/iobroker.apple-find-me.svg)](https://www.npmjs.com/package/iobroker.apple-find-me)
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/PfisterDaniel/ioBroker.apple-find-me/Test%20and%20Release?style=flat&logo=GitHub)
+[![NPM version](http://img.shields.io/npm/v/iobroker.apple-find-me.svg?style=flat&logo=npm)](https://www.npmjs.com/package/iobroker.apple-find-me)
+[![Downloads](https://img.shields.io/npm/dm/iobroker.apple-find-me.svg?style=flat)](https://www.npmjs.com/package/iobroker.apple-find-me)
 
 [![NPM](https://nodei.co/npm/iobroker.apple-find-me.png?downloads=true)](https://nodei.co/npm/iobroker.apple-find-me/)
 
