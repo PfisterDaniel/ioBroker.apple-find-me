@@ -9,7 +9,7 @@
 
 
 ## Donation:
-[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/donate/?hosted_button_id=NF8XH8AMXZV2J)
+[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg?style=flat&logo=PayPal)](https://www.paypal.com/donate/?hosted_button_id=NF8XH8AMXZV2J)
 
 ## Apple-find-me Adapter for ioBroker
 
