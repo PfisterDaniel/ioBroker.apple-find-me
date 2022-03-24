@@ -6,6 +6,10 @@
 
 [![NPM](https://nodei.co/npm/iobroker.apple-find-me.png?downloads=true)](https://nodei.co/npm/iobroker.apple-find-me/)
 
+
+## Donation:
+[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/donate/?hosted_button_id=NF8XH8AMXZV2J)
+
 ## Apple-find-me Adapter for ioBroker
 
 Apple Find Me Connector is a ioBroker-Adapter to get the current locations and other metrics of connected Apple devices.
