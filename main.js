@@ -4,12 +4,14 @@
  * Created by Daniel Pfister 2021
  */
 
-// The adapter-core module gives you access to the core ioBroker functions
-// you need to create an adapter
+/**
+ * Load modules
+ */
 const utils = require("@iobroker/adapter-core");
-var urllib = require("urllib");
-var moment = require('moment-timezone');
-var GeoPoint = require('geopoint'); 
+const urllib = require("urllib");
+const moment = require('moment-timezone');
+const GeoPoint = require('geopoint'); 
+
 
 /**
  * The adapter instance
@@ -33,18 +35,34 @@ function startAdapter(options) {
         // is called when adapter shuts down - callback has to be called under any circumstances!
         unload: (callback) => {
             try {
-                // Here you must clear all timeouts or intervals that may still be active
-                // clearTimeout(timeout1);
-                // clearInterval(interval1);
-
                 clearTimeout(RefreshTimeout);
                 callback();
             } catch (e) {
                 callback();
             }
         },
+        // is called if a subscribed state changes
+        stateChange: (id, state) => {
+            if (state) {
+                if(!state.ack){
+                    // The state was changed with no ack
+                    const idArray = id.split(".");
+
+                    if(idArray[idArray.length-1] = "PlaySound"){
+                        const buildDeviceID = id.replace(idArray[idArray.length-1], "DeviceID");
+                        adapter.getState(buildDeviceID, (error, state) => {
+                            let DeviceID = state.val;
+                            adapter.log.info("PlaySound on device: " + DeviceID);
+                            PlaySound(DeviceID);
+                            adapter.setState(id, false, true);
+                        });
+                    }
+                }
+            }
+        },
     }));
 }
+
 
 /**
  * Function to get Apple-Devices from ICloud
@@ -63,8 +81,6 @@ function RequestData() {
         "X-Apple-AuthScheme": "UserIDGuest",
         "X-Apple-Find-API-Ver": "3.0"
     }; 
-    //adapter.log.info(JSON.stringify(headers));
-    //var jsonDataObj = {"clientContext": {"appVersion": "7.0", "fmly": ""  + adapter.config.showfmly + ""} };
 
     return new Promise(rtn => {
         urllib.request('https://fmipmobile.icloud.com/fmipservice/device/' + user + '/initClient', {
@@ -72,7 +88,6 @@ function RequestData() {
             headers: headers,
             rejectUnauthorized: false,
             dataType: 'json',
-            //content: JSON.stringify(jsonDataObj)
             content: ''
         }, function(err, data, res) {
             if (!err && res.statusCode == 200) {
@@ -98,6 +113,50 @@ function RequestData() {
     });
 }
 
+/**
+ * 
+ * Function to play sound on Apple-Device (Find my iPhone)
+ * 
+ */
+ function PlaySound(DeviceID) {
+
+    const user = adapter.config.username;
+    const pass = adapter.config.password;
+
+    var headers = {
+        "Accept-Language": "de-DE",
+        "User-Agent": "FindMyiPhone/500 CFNetwork/758.4.3 Darwin/15.5.0",
+        "Authorization": "Basic " + Buffer.from(user + ":" + pass).toString('base64'),
+        "X-Apple-Realm-Support": "1.0",
+        "X-Apple-AuthScheme": "UserIDGuest",
+        "X-Apple-Find-API-Ver": "3.0"
+    }; 
+
+    var RequestContent = { "clientContext": { "appVersion": "7.0", "fmly": true }, "device": DeviceID, "subject": "IoBroker (Find-Me)" };
+
+    return new Promise(rtn => {
+        urllib.request('https://fmipmobile.icloud.com/fmipservice/device/' + user + '/playSound', {
+            method: 'POST',
+            headers: headers,
+            rejectUnauthorized: false,
+            dataType: 'json',
+            content: JSON.stringify(RequestContent)
+        }, function(err, data, res) {
+            if (!err && res.statusCode == 200) {
+                rtn({ "status": "successfully", "statusCode": 0, "message": "Sound was played successfully" })
+            } else {
+                //Ignore StatusCode -2
+                if (res.statusCode == -2) {
+                    rtn({ "statusCode": res.statusCode, "response": null });
+                } else if (res.statusCode == 500) {
+                    rtn({ "status": "failed", "statusCode": res.statusCode, "message": res.statusMessage });
+                } else {
+                    rtn({ "status": "failed", "statusCode": res.statusCode, "message": res.statusMessage });
+                }
+            }
+        });
+    });
+}
 
 /**
  * Function to parse Request-Content and create or update states
@@ -123,7 +182,7 @@ function CreateOrUpdateDevices(data) {
   
         if (DiscoveryID != ""){      
             var deviceImageUrl = 'https://statici.icloud.com/fmipmobile/deviceImages-9.0/' + element.deviceClass + '/' + element.rawDeviceModel + DevColor + '/online-infobox.png';
-            //adapter.log.info(JSON.stringify(element));
+
             urllib.request(deviceImageUrl, {
                     method: 'GET',
                     rejectUnauthorized: false,
@@ -170,6 +229,23 @@ function CreateOrUpdateDevices(data) {
                         });
 
                         adapter.setState(element.deviceClass + "." + DiscoveryID + ".ModelType", element.rawDeviceModel, true);
+
+                        await adapter.setObjectNotExistsAsync(element.deviceClass + "." + DiscoveryID + ".PlaySound", {
+                            type: "state",
+                            common: {
+                                name: "PlaySound",
+                                role: "button",
+                                type: "boolean",
+                                read: true,
+                                write: true,
+                                desc: "Play Sound on Device",
+                                def: false
+                            },
+                            native: {},
+                        });
+                        adapter.setState(element.deviceClass + "." + DiscoveryID + ".PlaySound", false, true);
+
+                        adapter.subscribeStates('*.PlaySound');
 
                         await adapter.setObjectNotExistsAsync(element.deviceClass + "." + DiscoveryID + ".ModelName", {
                             type: "state",
@@ -502,7 +578,7 @@ function CreateOrUpdateDevices(data) {
 
                             if (adapter.config.locations) {
                                 for (let i = 0; i < adapter.config.locations.length; i++) {
-                                    //Check if an Loocation is active
+                                    //Check if an location is active
                                     if (adapter.config.locations[i].active) {
                                         adapter.log.debug("Location " + adapter.config.locations[i].name + " is active");
                                         let distanceObj = {
@@ -548,18 +624,6 @@ function CreateOrUpdateDevices(data) {
  */
 function onReady() {
     adapter.getForeignObject("system.config", (err, obj) => {
-        /*try {
-            if (obj && obj.native && obj.native.secret) {
-                //noinspection JSUnresolvedVariable
-                adapter.config.password = decrypt(obj.native.secret, adapter.config.password || "No secret exists");
-            } else {
-                //noinspection JSUnresolvedVariable
-                adapter.config.password = decrypt("Zgfr56gFe87jJOM", adapter.config.password || "No secret exists");
-            }
-
-        } catch (err) {
-            adapter.log.warn("Error: " + err);
-        }*/
         main();
     });
 }
@@ -579,19 +643,11 @@ async function main() {
         adapter.log.info(JSON.stringify(Result.response.content.length) + " Devices found");
         CreateOrUpdateDevices(Result.response);
     }
-
-    //var j = schedule.scheduleJob('*/' + adapter.config.refresh + ' * * * *', async function() {
-    //    var Result = await RequestData();
-    //    if (Result.statusCode == 200) {
-    //        CreateOrUpdateDevices(Result.response);
-    //    }
-    //});    
     Refresh();
 }
 
 async function Refresh(){
     try {
-        //adapter.log.info("Refresh Apple-Find-Me Instance: " + adapter.config.username);
         var Result = await RequestData();
         if (Result.statusCode == 200) {
             CreateOrUpdateDevices(Result.response);

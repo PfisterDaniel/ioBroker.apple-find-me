@@ -35,9 +35,12 @@ Used Library [MomentJs](https://momentjs.com/timezone)
 
 
 ## Changelog
+### 0.0.13
+* Added play sound (find-my-iphone) [#11](https://github.com/PfisterDaniel/ioBroker.apple-find-me/issues/11)
+* Clean Code
 
 ### 0.0.12
-* Fix Issue #6
+* Fix Issue [#6](https://github.com/PfisterDaniel/ioBroker.apple-find-me/issues/6)
 
 ### 0.0.11
 * Fix Issues for publish from feedback Apollon77
@@ -55,7 +58,7 @@ Used Library [MomentJs](https://momentjs.com/timezone)
 * Bugfix
 
 ### 0.0.6
-* Bugfix #2
+* Bugfix [#2](https://github.com/PfisterDaniel/ioBroker.apple-find-me/issues/2)
 * Add Position State
 
 ### 0.0.5
