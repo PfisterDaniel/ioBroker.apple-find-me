@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "apple-find-me",
-    "version": "0.0.12",
+    "version": "0.0.13",
     "news": {
       "0.0.1": {
         "en": "initial release",
@@ -98,6 +98,18 @@
         "es": "Solucionar el problema n.º 6",
         "pl": "Napraw problem nr 6",
         "zh-cn": "修复问题 #6"
+      },
+      "0.0.13":{
+        "en": "Added play sound (find-my-iphone) and Clean Code",
+        "de": "Abspielton (find-my-iphone) und Clean Code hinzugefügt",
+        "ru": "Добавлен звук воспроизведения (найди мой iPhone) и чистый код",
+        "pt": "Adicionado som de reprodução (find-my-iphone) e Clean Code",
+        "nl": "Toegevoegd afspeelgeluid (vind-mijn-iphone) en Clean Code",
+        "fr": "Ajout d'un son de lecture (trouver mon iPhone) et de Clean Code",
+        "it": "Aggiunti suoni di riproduzione (trova il mio iPhone) e Clean Code",
+        "es": "Sonido de reproducción agregado (find-my-iphone) y código limpio",
+        "pl": "Dodano dźwięk odtwarzania (znajdź mój iphone) i czysty kod",
+        "zh-cn": "添加了播放声音（find-my-iphone）和 Clean Code"
       }
     },
     "title": "Apple Find Me",
