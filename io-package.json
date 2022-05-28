@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "apple-find-me",
-    "version": "0.0.13",
+    "version": "0.0.14",
     "news": {
       "0.0.1": {
         "en": "initial release",
@@ -110,6 +110,18 @@
         "es": "Sonido de reproducción agregado (find-my-iphone) y código limpio",
         "pl": "Dodano dźwięk odtwarzania (znajdź mój iphone) i czysty kod",
         "zh-cn": "添加了播放声音（find-my-iphone）和 Clean Code"
+      },
+      "0.0.14":{
+        "en": "Code cleaning",
+        "de": "Code-Reinigung",
+        "ru": "Очистка кода",
+        "pt": "Limpeza de código",
+        "nl": "Code opschonen",
+        "fr": "Nettoyage des codes",
+        "it": "Pulizia del codice",
+        "es": "Limpieza de código",
+        "pl": "Czyszczenie kodu",
+        "zh-cn": "代码清洗"
       }
     },
     "title": "Apple Find Me",
@@ -175,11 +187,10 @@
     "globalDependencies": [{
         "admin": ">=4.0.10"
     }],
-    "installedFrom": "PfisterDaniel/ioBroker.apple-find-me#530cd05d94e3c2c4d03696318a63b521967ec8aa"
   },
   "native": { 
-    "username": "email@me.com",
-    "password": "password",
+    "username": "",
+    "password": "",
     "mapprovider": "osm",
     "apikey": "XXXX-XXXX-XXXX-XXXX",
     "refresh": "5",

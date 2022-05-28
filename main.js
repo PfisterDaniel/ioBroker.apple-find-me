@@ -475,7 +475,8 @@ function CreateOrUpdateDevices(data) {
                             } else if (adapter.config.mapprovider === 'here') {
                                 MapApiUrl = 'https://revgeocode.search.hereapi.com/v1/revgeocode?at=' + element.location.latitude.toFixed(6) + ',' + element.location.longitude.toFixed(6) + '&apiKey=' + adapter.config.apikey;
                             } else if (adapter.config.mapprovider === 'google') {
-                                MapApiUrl = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' + element.location.latitude + ',' + element.location.longitude + '&language=de&result_type=street_address&key=' + adapter.config.apikey;
+                                //MapApiUrl = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' + element.location.latitude + ',' + element.location.longitude + '&key=' + adapter.config.apikey;
+                                MapApiUrl = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' + element.location.latitude + ',' + element.location.longitude + '&language=de&result_type=street_address&key=' + adapter.config.apikey
                             }
 
                             adapter.log.debug(MapApiUrl);
@@ -514,7 +515,7 @@ function CreateOrUpdateDevices(data) {
                                             }
                                             adapter.setState(element.deviceClass + "." + DiscoveryID + ".Location.CurrentAddress", CurrentAddress, true);
                                         } else {
-                                            adapter.log.error("Error on getting address from OpenStreetMaps");
+                                            adapter.log.warn("Error on getting address from OpenStreetMaps");
                                             adapter.setState(element.deviceClass + "." + DiscoveryID + ".Location.CurrentAddress", "< ErrorCode " + res.statusCode + " >", true);
                                         }
                                     } else if (adapter.config.mapprovider === 'bing') {
@@ -523,7 +524,7 @@ function CreateOrUpdateDevices(data) {
                                             adapter.setState(element.deviceClass + "." + DiscoveryID + ".Location.CurrentAddress", CurrentAddress, true);
                                         } else {
                                             if (res.statusCode == 401) {
-                                                adapter.log.error("API-Key not valid. Please Validate your API-KEY!");
+                                                adapter.log.warn("API-Key not valid. Please Validate your API-KEY!");
                                                 adapter.setState(element.deviceClass + "." + DiscoveryID + ".Location.CurrentAddress", "< No valid API-KEY >", true);
                                             }
                                         }
@@ -533,11 +534,11 @@ function CreateOrUpdateDevices(data) {
                                                 var CurrentAddress = data.items[0].address.label;
                                                 adapter.setState(element.deviceClass + "." + DiscoveryID + ".Location.CurrentAddress", CurrentAddress, true);
                                             } catch (e) {
-                                                adapter.log.error("Error on getting address from Here-Maps: " + e);
+                                                adapter.log.warn("Error on getting address from Here-Maps: " + e);
                                                 adapter.setState(element.deviceClass + "." + DiscoveryID + ".Location.CurrentAddress", "< Error " + e + " >", true);
                                             }
                                         } else {
-                                            adapter.log.error("Error on getting address from Here-Maps");
+                                            adapter.log.warn("Error on getting address from Here-Maps");
                                             adapter.setState(element.deviceClass + "." + DiscoveryID + ".Location.CurrentAddress", "< ErrorCode " + res.statusCode + " >", true);
                                         }
                                     } else if (adapter.config.mapprovider === 'google') {
@@ -546,12 +547,12 @@ function CreateOrUpdateDevices(data) {
                                                 var CurrentAddress = data.results[0].formatted_address;
                                                 adapter.setState(element.deviceClass + "." + DiscoveryID + ".Location.CurrentAddress", CurrentAddress, true);
                                             } else {
-                                                adapter.log.error("Error on getting address from Google-Maps");
+                                                adapter.log.warn("Error on getting address from Google-Maps (" + data.status + ") - " + data.error_message);
                                                 adapter.setState(element.deviceClass + "." + DiscoveryID + ".Location.CurrentAddress", "< Error: " + data.status + " >", true);
                                             }
 
                                         } else {
-                                            adapter.log.error("Error on getting address from Google-Maps");
+                                            adapter.log.warn("Error on getting address from Google-Maps");
                                             adapter.setState(element.deviceClass + "." + DiscoveryID + ".Location.CurrentAddress", "< ErrorCode " + res.statusCode + " >", true);
                                         }
                                     }
