@@ -77,6 +77,7 @@
                 /*if(id === 'map_provider'){
                     showMessage(_($key.val()));
                 }*/
+
                 if (id === 'mapprovider') {
                     $('#mapprovider').val(settings[id]).select();
                     switch (settings[id]) {
@@ -98,11 +99,44 @@
                             $('#apikey_link').attr("href", "https://developers.google.com/maps/documentation/javascript/get-api-key");
                             $('#apikey_link').attr("title", "Create API-KEY for Google-Maps");
                             break;
+                        case 'geoapify':
+                            $('#div_api_key').show();
+                            $('#apikey_link').attr("href", "https://www.geoapify.com");
+                            $('#apikey_link').attr("title", "Create API-KEY for Geoapify");
+                            break;
+                        case 'locationiq_eu':
+                            $('#div_api_key').show();
+                            $('#apikey_link').attr("href", "https://locationiq.com");
+                            $('#apikey_link').attr("title", "Create API-KEY for LocationIQ");
+                            break;
+                        case 'locationiq_usa':
+                            $('#div_api_key').show();
+                            $('#apikey_link').attr("href", "https://locationiq.com");
+                            $('#apikey_link').attr("title", "Create API-KEY for LocationIQ");
+                            break;
+                        case 'positionstack':
+                            $('#div_api_key').show();
+                            $('#apikey_link').attr("href", "https://positionstack.com");
+                            $('#apikey_link').attr("title", "Create API-KEY for PositionStack");
+                            break;
+                        case 'tomtom':
+                            $('#div_api_key').show();
+                            $('#apikey_link').attr("href", "https://developer.tomtom.com/store/maps-api");
+                            $('#apikey_link').attr("title", "Create API-KEY for TomTom-Developer-API");
+                            break;
                         default:
                     }
                 }
                 if (id === 'refresh') {
                     $('#refresh').val(settings[id]).select();
+
+                    if(settings[id] != "none" && settings[id] >= 5){
+                        $('#interval_warning').hide();
+                    }else if(settings[id] != "none" && settings[id] < 5){
+                        $('#interval_warning').show();
+                    }else{
+                        $('#interval_warning').hide();
+                    }
                 }
                 if (id === 'timezone') {
                     $('#timezone').val(settings[id]).select();
@@ -131,6 +165,16 @@
                 settings.locations[p].active = settings.locations[p].active || '';
             }
 
+            $('#refresh').change(function() {
+                var $refreshInterval = $('#refresh');
+                if($refreshInterval.val() != "none" && $refreshInterval.val() >= 5){
+                    $('#interval_warning').hide();
+                }else if($refreshInterval.val() != "none" && $refreshInterval.val() < 5){
+                    $('#interval_warning').show();
+                }else{
+                    $('#interval_warning').hide();
+                }
+            });
 
             $('#mapprovider').change(function() {
                 var $mapprovider = $('#mapprovider');
@@ -152,6 +196,31 @@
                         $('#div_api_key').show();
                         $('#apikey_link').attr("href", "https://developers.google.com/maps/documentation/javascript/get-api-key");
                         $('#apikey_link').attr("title", "Create API-KEY for Google-Maps");
+                        break;
+                    case 'geoapify':
+                        $('#div_api_key').show();
+                        $('#apikey_link').attr("href", "https://www.geoapify.com");
+                        $('#apikey_link').attr("title", "Create API-KEY for Geoapify");
+                        break;
+                    case 'locationiq_eu':
+                        $('#div_api_key').show();
+                        $('#apikey_link').attr("href", "https://locationiq.com");
+                        $('#apikey_link').attr("title", "Create API-KEY for LocationIQ");
+                        break;
+                    case 'locationiq_usa':
+                        $('#div_api_key').show();
+                        $('#apikey_link').attr("href", "https://locationiq.com");
+                        $('#apikey_link').attr("title", "Create API-KEY for LocationIQ");
+                        break;
+                    case 'positionstack':
+                        $('#div_api_key').show();
+                        $('#apikey_link').attr("href", "https://positionstack.com");
+                        $('#apikey_link').attr("title", "Create API-KEY for PositionStack");
+                        break;
+                    case 'tomtom':
+                        $('#div_api_key').show();
+                        $('#apikey_link').attr("href", "https://developer.tomtom.com/store/maps-api");
+                        $('#apikey_link').attr("title", "Create API-KEY for TomTom-Developer-API");
                         break;
                     default:
                 }
@@ -227,33 +296,42 @@
             <div id="tab-main" class="col s12 page">
                 <div class="row">
                     <div class="col s6 input-field">
+                        <i class="material-icons prefix">account_circle</i>
                         <input type="text" class="value" id="username" />
                         <label for="username" class="translate">Username</label>
                     </div>
 
                     <div class="col s6 input-field">
+                        <i class="material-icons prefix">lock</i>
                         <input type="password" class="value" id="password" />
                         <label for="password" class="translate">Password</label>
                     </div>
 
                     <div class="input-field col s6">
+                        <i class="material-icons prefix">map</i>
                         <select class="value" id="mapprovider">
                             <option value="osm">OpenStreetMaps</option>
                             <option value="bing">Bing-Maps</option>
                             <option value="here">Here-Maps</option>
                             <option value="google">Google-Maps</option>
+                            <option value="geoapify">Geoapify</option>
+                            <option value="locationiq_eu">LocationIQ (Europe)</option>
+                            <option value="locationiq_usa">LocationIQ (USA)</option>
+                            <option value="positionstack">PositionStack</option>
+                            <option value="tomtom">TomTom</option>
                         </select>
                         <label class="translate" for="mapprovider">Map-Provider</label>
                     </div>
 
                     <div class="col s6 input-field" id="div_api_key">
+                        <i class="material-icons prefix">vpn_key</i>
                         <input type="text" class="value" id="apikey" />
                         <label id="apikey" for="apikey" class="translate">API-Key</label>
                         <a id="apikey_link" href="https://developer.here.com/" target="_blank" title="Create API-Key"><img src="key.png" class="keyIcon" /></a>
                     </div>
 
                     <div class="col s6 input-field">
-                        <!--<input type="text" class="value" id="timezone" />-->
+                        <i class="material-icons prefix">av_timer</i>
                         <select class="value" id="timezone">
                             <Option value='Africa/Abidjan'>Africa/Abidjan</Option>
                             <Option value='Africa/Accra'>Africa/Accra</Option>
@@ -850,12 +928,19 @@
                         <label for="timezone" class="translate">Timezone</label>
                     </div>
                     <div class="col s6 input-field">
+                        <i class="material-icons prefix">more</i>
                         <input type="text" class="value" id="timeformat" />
                         <label for="timeformat" class="translate">Date / Time Format</label>
                         <a id="format_help_link" href="https://momentjs.com/docs/#/parsing/string-format/" target="_blank" title="Get information about available formats..."><img src="help.png" class="keyIcon" /></a>
                     </div>
-                    <div class="input-field col s2">
+                    <div class="input-field col s6">
+                        <i class="material-icons prefix">autorenew</i>
                         <select class="value" id="refresh">
+                            <option value="none" class="translate">Disabled</option>
+                            <option value="1" class="translate">Every minute</option>
+                            <option value="2" class="translate">Every 2 minutes</option>
+                            <option value="3" class="translate">Every 3 minutes</option>
+                            <option value="4" class="translate">Every 4 minutes</option>
                             <option value="5" class="translate">Every 5 minutes</option>
                             <option value="10" class="translate">Every 10 minutes</option>
                             <option value="15" class="translate">Every 15 minutes</option>
@@ -870,6 +955,14 @@
                             <option value="60" class="translate">Every 60 minutes</option>
                         </select>
                         <label class="translate" for="refresh">Refresh Intervall</label>
+                        <span class="translate" id="interval_warning"><i class="tiny material-icons">warning</i> Warning: This interval is not recommended because errors are common at this interval.</span>
+                    </div>
+
+                    <div class="input-field col s4">
+                        <i class="material-icons prefix">location_searching</i>
+                        <input type="text" class="value" id="radius" />
+                        <label for="radius" class="translate">Radius for location determination</label>
+                        <span class="translate" >Note: In meters</span>
                     </div>
                     <!-- Family-Device are not longer working 
                     <div class="input-field col s12">

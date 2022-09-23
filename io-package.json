@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "apple-find-me",
-    "version": "0.0.14",
+    "version": "0.0.15",
     "news": {
       "0.0.1": {
         "en": "initial release",
@@ -122,6 +122,18 @@
         "es": "Limpieza de código",
         "pl": "Czyszczenie kodu",
         "zh-cn": "代码清洗"
+      },
+      "0.0.15":{
+        "en": "Add new Attributes, Radius and Bug-Fixes",
+        "de": "Neue Attribute, Radius und Bug-Fixes hinzufügen",
+        "ru": "Добавить новые атрибуты, Radius и Bug-Fixes",
+        "pt": "Adicionar novos atributos, Radius e Bug-Fixes",
+        "nl": "Voeg nieuwe Attributen toe, Radius en Bug-Fixes",
+        "fr": "Ajouter de nouveaux Attributs, Radius et Bug-Fixes",
+        "it": "Aggiungi nuovi attributi, Radius e Bug-Fixes",
+        "es": "Añadir nuevos Atributos, Radius y Bug-Fixes",
+        "pl": "Addd new Attributes, Radius and Bug-Fixes (ang.)",
+        "zh-cn": "增加新的档案、Radius和Bug-Fix"
       }
     },
     "title": "Apple Find Me",
@@ -195,13 +207,14 @@
     "apikey": "XXXX-XXXX-XXXX-XXXX",
     "refresh": "5",
     "showfmly": true,
+    "radius": 150,
     "timezone": "Europe/Berlin",
     "timeformat": "YYYY-MM-DD HH:mm:ss",
     "locations": [
       {
         "name": "Home",
         "latitude": "0.000000",
-        "longitude": "0.00000",
+        "longitude": "0.000000",
         "active": false
       }
     ]

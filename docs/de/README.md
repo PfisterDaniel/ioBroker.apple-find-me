@@ -22,32 +22,14 @@ Used Library [MomentJs](https://momentjs.com/timezone)
 * [HereMaps](https://developer.here.com/)
 * [BingMaps](https://www.bingmapsportal.com/)
 * [GoogleMaps](https://developers.google.com/maps/documentation/javascript/get-api-key)
+* [Geoapify](https://www.geoapify.com)
+* [LocationIQ](https://locationiq.com)
+* [PositionStack](https://positionstack.com)
+* [TomTom](https://developer.tomtom.com/store/maps-api)
 
 
 ## Example Objects
 ![Example](https://raw.githubusercontent.com/PfisterDaniel/iobroker.apple-find-me/master/images/example_output.png)
-
-
-
-## Changelog
-
-### 0.0.5
-* Add Trier
-* Change Error-Count intervall
-
-### 0.0.4
-* Bugfix with Time-Format in the Objectlist (Set default rule from value.time to text)
-* Family-Devices not longer working
-
-### 0.0.3
-* Add Timezone and Time-Formats
-* Bugfixes
-
-### 0.0.2
-* Added features and bugfixes
-
-### 0.0.1
-* Initial release
 
 
 ## Bugs and feature requests
