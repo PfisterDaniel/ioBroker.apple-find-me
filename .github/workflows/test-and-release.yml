@@ -19,7 +19,7 @@ on:
 jobs:
   # Performs quick checks before the expensive test runs
   check-and-lint:
-    if: contains(github.event.head_commit.message, '[skip ci]') == false
+    if: contains(github.event.head_commit.message, '[skip ci]') == false && contains(github.event.head_commit.message, '[skip ci]') == false
 
     runs-on: ubuntu-latest
 
