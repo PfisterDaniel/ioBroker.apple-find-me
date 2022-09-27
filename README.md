@@ -12,6 +12,13 @@ Apple Find Me Connector is a ioBroker-Adapter to get the current locations and o
 
 It work's without 2-Factor-Authentication (2FA) and retrive all connected devices.
 
+## Donation:
+You can buy me a coffee or two if you find helpfull my adapter.
+
+If you buy me a coffee I would like to thank you in advance for your donation.
+
+[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg?style=flat&logo=PayPal)](https://www.paypal.com/donate/?hosted_button_id=NF8XH8AMXZV2J)
+
 ## Configuration
 ![ConfigImage](https://raw.githubusercontent.com/PfisterDaniel/iobroker.apple-find-me/master/images/config.png)
 
