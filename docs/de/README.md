@@ -12,6 +12,13 @@ Apple Find Me Connector is a ioBroker-Adapter to get the current locations and o
 
 It work's without 2-Factor-Authentication (2FA) and retrive all connected devices.
 
+## Donation:
+You can buy me a coffee or two if you find helpfull my adapter.
+
+If you buy me a coffee I would like to thank you in advance for your donation.
+
+[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg?style=flat&logo=PayPal)](https://www.paypal.com/donate/?hosted_button_id=NF8XH8AMXZV2J)
+
 ## Configuration
 ![ConfigImage](https://raw.githubusercontent.com/PfisterDaniel/iobroker.apple-find-me/master/images/config.png)
 
@@ -22,32 +29,14 @@ Used Library [MomentJs](https://momentjs.com/timezone)
 * [HereMaps](https://developer.here.com/)
 * [BingMaps](https://www.bingmapsportal.com/)
 * [GoogleMaps](https://developers.google.com/maps/documentation/javascript/get-api-key)
+* [Geoapify](https://www.geoapify.com)
+* [LocationIQ](https://locationiq.com)
+* [PositionStack](https://positionstack.com)
+* [TomTom](https://developer.tomtom.com/store/maps-api)
 
 
 ## Example Objects
 ![Example](https://raw.githubusercontent.com/PfisterDaniel/iobroker.apple-find-me/master/images/example_output.png)
-
-
-
-## Changelog
-
-### 0.0.5
-* Add Trier
-* Change Error-Count intervall
-
-### 0.0.4
-* Bugfix with Time-Format in the Objectlist (Set default rule from value.time to text)
-* Family-Devices not longer working
-
-### 0.0.3
-* Add Timezone and Time-Formats
-* Bugfixes
-
-### 0.0.2
-* Added features and bugfixes
-
-### 0.0.1
-* Initial release
 
 
 ## Bugs and feature requests

@@ -1,15 +1,10 @@
-![Logo](https://raw.githubusercontent.com/PfisterDaniel/ioBroker.apple-find-me/master/admin/find-me.png)
-# ioBroker.apple-find-me
+![Logo](https://raw.githubusercontent.com/PfisterDaniel/iobroker.apple-find-me/master/admin/find-me.png)
+# iobroker.apple-find-me
 
-![GitHub Workflow Status](https://img.shields.io/github/workflow/status/PfisterDaniel/ioBroker.apple-find-me/Test%20and%20Release?style=flat&logo=GitHub)
-[![NPM version](http://img.shields.io/npm/v/iobroker.apple-find-me.svg?style=flat&logo=npm)](https://www.npmjs.com/package/iobroker.apple-find-me)
-[![Downloads](https://img.shields.io/npm/dm/iobroker.apple-find-me.svg?style=flat)](https://www.npmjs.com/package/iobroker.apple-find-me)
+[![NPM version](http://img.shields.io/npm/v/iobroker.apple-find-me.svg)](https://www.npmjs.com/package/iobroker.apple-find-me)
+[![Downloads](https://img.shields.io/npm/dm/iobroker.apple-find-me.svg)](https://www.npmjs.com/package/iobroker.apple-find-me)
 
 [![NPM](https://nodei.co/npm/iobroker.apple-find-me.png?downloads=true)](https://nodei.co/npm/iobroker.apple-find-me/)
-
-
-## Donation:
-[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg?style=flat&logo=PayPal)](https://www.paypal.com/donate/?hosted_button_id=NF8XH8AMXZV2J)
 
 ## Apple-find-me Adapter for ioBroker
 
@@ -17,8 +12,15 @@ Apple Find Me Connector is a ioBroker-Adapter to get the current locations and o
 
 It work's without 2-Factor-Authentication (2FA) and retrive all connected devices.
 
+## Donation:
+You can buy me a coffee or two if you find helpfull my adapter.
+
+If you buy me a coffee I would like to thank you in advance for your donation.
+
+[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg?style=flat&logo=PayPal)](https://www.paypal.com/donate/?hosted_button_id=NF8XH8AMXZV2J)
+
 ## Configuration
-![ConfigImage](https://raw.githubusercontent.com/PfisterDaniel/ioBroker.apple-find-me/master/images/config.png)
+![ConfigImage](https://raw.githubusercontent.com/PfisterDaniel/iobroker.apple-find-me/master/images/config.png)
 
 ### Available Timezones
 Used Library [MomentJs](https://momentjs.com/timezone)
@@ -27,61 +29,18 @@ Used Library [MomentJs](https://momentjs.com/timezone)
 * [HereMaps](https://developer.here.com/)
 * [BingMaps](https://www.bingmapsportal.com/)
 * [GoogleMaps](https://developers.google.com/maps/documentation/javascript/get-api-key)
+* [Geoapify](https://www.geoapify.com)
+* [LocationIQ](https://locationiq.com)
+* [PositionStack](https://positionstack.com)
+* [TomTom](https://developer.tomtom.com/store/maps-api)
 
 
 ## Example Objects
-![Example](https://raw.githubusercontent.com/PfisterDaniel/ioBroker.apple-find-me/master/images/example_output.png)
-
-
-
-## Changelog
-### 0.0.13
-* Added play sound (find-my-iphone) [#11](https://github.com/PfisterDaniel/ioBroker.apple-find-me/issues/11)
-* Clean Code
-
-### 0.0.12
-* Fix Issue [#6](https://github.com/PfisterDaniel/ioBroker.apple-find-me/issues/6)
-
-### 0.0.11
-* Fix Issues for publish from feedback Apollon77
-
-### 0.0.10
-* Add GitHub Workflow
-
-### 0.0.9
-* Fix Issue with Github Actions
-
-### 0.0.8
-* Fixes Issues for publish the Adapter to IoBroker-Repository
-
-### 0.0.7
-* Bugfix
-
-### 0.0.6
-* Bugfix [#2](https://github.com/PfisterDaniel/ioBroker.apple-find-me/issues/2)
-* Add Position State
-
-### 0.0.5
-* Add Trier
-* Change Error-Count intervall
-
-### 0.0.4
-* Bugfix with Time-Format in the Objectlist (Set default rule from value.time to text)
-* Family-Devices not longer working
-
-### 0.0.3
-* Add Timezone and Time-Formats
-* Bugfixes
-
-### 0.0.2
-* Added features and bugfixes
-
-### 0.0.1
-* Initial release
+![Example](https://raw.githubusercontent.com/PfisterDaniel/iobroker.apple-find-me/master/images/example_output.png)
 
 
 ## Bugs and feature requests
-Please create an issue in [GitHub](https://github.com/PfisterDaniel/ioBroker.apple-find-me/issues)
+Please create an issue in [GitHub](https://github.com/PfisterDaniel/iobroker.apple-find-me/issues)
 
 
 ## License
@@ -105,6 +64,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
-
-Copyright (c) 2022 MasterDan kontakt@daniel-lippert.de
